@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    @if (!Request.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-offset-9">
+                <div class="text-primary">
+                    Please Register or Login to Explore !
+                </div>
+            </div>
+        </div>
+    }
+    <h1>Bug Tracker</h1>
+
+    
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        
+        <i class="fa fa-bug fa-lg"></i>
+        <i class="fa fa-bug fa-2x"></i>
+        <i class="fa fa-bug fa-3x"></i>
+    </div>
+    <div class="col-md-4">
+        <H4>What is bug tracker ?</H4>
+        <p align="justify">
+        A bug tracker is a software application that keeps track of reported software bugs in the software development projects. A bug tracking system is is an important component in software development and use of a bug or issue tracking system improves the quality of software development.
+    </p>
+
+        <p align="justify">
+            It has 4 roles - Administrator, Project Manager, Developer and Submitter. The available menus differ based on the type of role the user is assigned. Guest users can see a list of all the tickets.
+        </p>
+
+        
+    </div>
+    <div class="col-md-4">
+    <h4>Technologies Used</h4>
+        HTML5 , CSS3 , MVC5 , Bootstrap , SQL , LINQ    
+    </div>
+
+    </div>
+    

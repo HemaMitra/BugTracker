@@ -1,0 +1,32 @@
+﻿@model BugTracker.Models.AdminViewModel
+@{
+    ViewBag.Title = "EditUserRole";
+}
+
+<h2>Edit User Role</h2>
+
+<form action="@Url.Action("EditUserRole", new { userId = Model.User.Id })" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-5">
+            @Html.LabelFor(model => model.User)
+        </div>
+        <div class="col-md-7">
+            @Html.DisplayFor(model => model.User.UserName) 
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5">
+            @Html.LabelFor(model => model.Roles)
+        </div>
+        <div class="col-md-7">
+            @Html.ListBoxFor(model => model.SelectedRoles, Model.Roles, new { @class = "form-control"})
+        </div>
+    </div>
+
+    <div class="row">
+        <input type="submit" value="Submit" class="btn btn-sm btn-primary" />
+    </div>
+
+</form>

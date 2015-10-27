@@ -1,0 +1,33 @@
+﻿@model IEnumerable<BugTracker.Models.Projects>
+@{
+    ViewBag.Title = "";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<H3 class="fadeInDown">Projects</H3>
+
+<div>
+<table class="table table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+
+
+
+
+

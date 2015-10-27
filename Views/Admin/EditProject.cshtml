@@ -1,0 +1,103 @@
+﻿@model IEnumerable<BugTracker.Models.Projects>
+@{
+    ViewBag.Title = "";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<H3 class="fadeInDown">List of all Projects</H3>
+
+<div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                <a href="" class="edit" data-toggle="modal" data-target="#editproject" data-comid="@item.Id"
+                   data-body="@item.ProjectName" data-archieve="@item.ProjectArchieved">Edit Project</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+</div>
+
+<div class="fadeInRight pull-right">@TempData["Message"]</div>
+
+<div class="modal fade" id="editproject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Project Name</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("EditProject")" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="Id" name="Id" />
+                    Project Name: <input type="text" class="form-control" id="ProjectName" name="ProjectName"><br>
+                    Delete Project : 
+                        
+                    
+                         <input type="checkbox" class="form-control" id="ProjectArchieved" name="ProjectArchieved" value='true'>
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-sm btn-primary col-md-offset-4" />
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+            $('.edit').click(function () {
+                $('#Id').attr("value", $(this).data("comid"));
+                $('#ProjectName').val($(this).attr("data-body"));  
+                var ch = $(this).data("archieve");
+                 
+                if (ch == "True") {
+                    $('#ProjectArchieved').val(true);
+                    $('#ProjectArchieved').prop('checked',true);
+                }
+                else {
+                    $('#ProjectArchieved').val(false);
+                    $('#ProjectArchieved').prop('checked',false);
+                }
+            })
+
+            $("#ProjectArchieved").change(function () {
+                
+                if ($('#ProjectArchieved').is(":checked")) {
+                    $('#ProjectArchieved').val(true);
+                }
+                else {
+                    $('#ProjectArchieved').val(false);
+                }
+            })
+
+            $('.back').click(function () {
+            })
+
+           
+    </script>
+}
+
+

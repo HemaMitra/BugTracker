@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BugTracker.Models.Projects>
+@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @if(User.IsInRole("Admin"))
+    { 
+        @Html.ActionLink("Create New project", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectArchieved)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    if(item.ProjectArchieved == false)
+    { 
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProjectArchieved)
+        </td>
+    </tr>
+    }
+}
+
+</table>

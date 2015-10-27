@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BugTracker.Models.Projects>
+@{
+    ViewBag.Title = "";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<H3 class="fadeInDown">List of all projects</H3>
+
+<div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </th>
+        <th>
+            Add Users
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.ActionLink("Add Users", "EditUserProject", new { projectId = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+<div class="pull-right fadeInRight">@TempData["Message"]</div>
+

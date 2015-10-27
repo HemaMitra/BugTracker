@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BugTracker.Models.Projects>
+@{
+    ViewBag.Title = "Authorized Index";
+}
+
+<div class="jumbotron">
+    @if(User.IsInRole("Admin"))
+    { 
+        <h2>All Projects</h2>
+    }
+    else
+    {
+        <h2>Assigned Projects</h2>
+    }
+</div>
+
+<div class="row">
+    <div>
+        <table class="table table-striped">
+            <tr>
+                @if (User.IsInRole("Admin"))
+                { 
+                    <th>
+                        All projects
+                    </th> 
+                }
+                else
+                {
+                    <th>
+                        Assigned Projects
+                    </th>
+                }
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

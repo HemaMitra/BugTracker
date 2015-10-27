@@ -1,0 +1,80 @@
+﻿@model IEnumerable<BugTracker.Models.ApplicationUser>
+@{
+    ViewBag.Title = "";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<H3 class="fadeInDown">List of all the users</H3>
+
+<div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Role", "EditUserRole", new { userId = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+</div>
+
+<div>
+    <a href="" data-toggle="modal" data-target="#newproject">Create Project</a>    <br><br>
+    @Html.ActionLink("Edit Existing Project", "EditProject") <BR><BR>
+    @Html.ActionLink("Assign Users to Project", "ProjectList")
+
+
+</div>
+<div class="pull-right fadeInRight">@TempData["Message"]</div>
+
+<div class="modal fade" id="newproject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Add Project</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("CreateProject")" method="post" enctype="multipart/form-data" role="form">
+                    @Html.AntiForgeryToken()
+                    Project Name: <input type="text" class="form-control" id="ProjectName" name="ProjectName">
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-sm btn-primary col-md-offset-4" />
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
