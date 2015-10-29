@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
+using Microsoft.AspNet.Identity;
+using System.IO;
 
 namespace BugTracker.Controllers
 {
@@ -17,7 +19,15 @@ namespace BugTracker.Controllers
         // GET: Tickets
         public ActionResult Index()
         {
+            if(User.IsInRole("ProjectManager") || User.IsInRole("Developer") || (User.IsInRole("Submitter")))
+            {
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var proj = user.Projects.ToList();
+                var userTickets = proj.SelectMany(p => p.Tickets);
+                return View(userTickets.ToList());
+            }
             var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
+
             return View(tickets.ToList());
         }
 
@@ -42,8 +52,15 @@ namespace BugTracker.Controllers
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
             //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName");
-            var proj = db.Projects.Where(l=>l.ProjectArchieved == false);
-            ViewBag.ProjectId = new SelectList(proj , "Id", "ProjectName");
+           
+            // Show only those projects on which the submitter is assigned to
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var proj = user.Projects.ToList();
+            var proj1 = proj.Where(l => l.ProjectArchieved == false);
+
+
+            //var proj = db.Projects.Where(l=>l.ProjectArchieved == false);
+            ViewBag.ProjectId = new SelectList(proj1 , "Id", "ProjectName");
             //ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName");
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName");
             //Hema
@@ -56,7 +73,7 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,ProjectId,TicketTypeId,TicketPiorityId,OwnerUserId")]
+        public ActionResult Create([Bind(Include = "Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,OwnerUserId")]
                         Tickets tickets)
         {
             if (ModelState.IsValid)
@@ -74,10 +91,10 @@ namespace BugTracker.Controllers
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
             //ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName", tickets.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName", tickets.TicketTypeId);
-            ViewBag.TicketStatusId = new SelectList(db.TicketPriority, "Id", "PriorityName", tickets.TicketPiorityId);
+            ViewBag.TicketStatusId = new SelectList(db.TicketPriority, "Id", "PriorityName", tickets.TicketPriorityId);
             return View(tickets);
         }
-
+        
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -90,11 +107,16 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
-            ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
+            var projId = db.Projects.Find(tickets.ProjectId);
+            var projUsers = projId.Users.ToList();
+
+            //ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
+            ViewBag.AssignedToUserId = new SelectList(projUsers, "Id", "FirstName", tickets.AssignedToUserId);
+            //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
+            //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName", tickets.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName", tickets.TicketTypeId);
+            ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "PriorityName", tickets.TicketPriorityId);
             return View(tickets);
         }
 
@@ -103,10 +125,14 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPiorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Tickets tickets)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Tickets tickets)
         {
             if (ModelState.IsValid)
             {
+                tickets.Updated = System.DateTimeOffset.Now;
+
+                db.Tickets.Attach(tickets);
+                db.Entry(tickets).Property("Updated").IsModified = true;
                 db.Entry(tickets).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -144,6 +170,49 @@ namespace BugTracker.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public ActionResult CreateComments(TicketComments tc,HttpPostedFileBase image)
+        {
+            // uploading image
+            if (image != null && image.ContentLength > 0)
+            { 
+                // Check the file name for allowed file types
+                var ext = Path.GetExtension(image.FileName).ToLower();
+                if (ext != ".png" && ext != ".jpg" && ext != ".jpeg" && ext != ".gif" && ext != ".bmp" && ext != ".doc" && ext != ".pdf")
+                {
+                    ModelState.AddModelError("image", "Invalid Format");
+                }
+
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Saving Image
+                if (image != null)
+                {
+                    // relative server path
+                    var filePath = "/Uploads/";
+
+                    // path on physical drive on server
+                    var absPath = Server.MapPath("~" + filePath);
+
+                    // media URL for relative path
+                    tc.FileUrl = filePath + "/" + image.FileName;
+
+                    // save image
+                    Directory.CreateDirectory(absPath);
+                    image.SaveAs(Path.Combine(absPath, image.FileName));
+                }
+                tc.CommentsCreated = System.DateTimeOffset.Now;
+                tc.FilePath = null;
+                db.TicketComments.Add(tc);
+                db.SaveChanges();   
+            }
+            return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
+        }
+
+
+
 
         protected override void Dispose(bool disposing)
         {

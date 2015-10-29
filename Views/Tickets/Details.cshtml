@@ -1,4 +1,5 @@
 ﻿@model BugTracker.Models.Tickets
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
@@ -6,12 +7,22 @@
 
 <h2>Details</h2>
 
-<div>
+<div class="padding-bt">
     <h4>Tickets</h4>
     <hr />
+    <div class="col-sm-offset-9">
+        @Html.ActionLink("Back to List", "Index") |
+        @if (Model.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            @Html.ActionLink("Add Comments", "CreateComments", new { ticketId = Model.Id, userId = User.Identity.GetUserId() })
+        }
+    </div>
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
+            Assigned To :
+            @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
         </dt>
 
         <dd>
@@ -19,80 +30,161 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
+            <br />
+            Owner Name :
+            @*@Html.DisplayNameFor(model => model.OwnerUser.FirstName)*@
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.OwnerUser.FirstName)
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.Project.ProjectName)
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.Project.ProjectName)
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.TicketStatus.StatusName)
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.TicketStatus.StatusName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketType.TicketName)
+            <br />Ticket Type :
+            @*@Html.DisplayNameFor(model => model.TicketType.TicketName)*@
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.TicketType.TicketName)
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.Title)
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.Title)
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            <br />
+            @Html.Raw(@Model.Description)
+            @*@Html.DisplayFor(model => model.Description)*@
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.Created)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Created)
+            <br />
+            @*@Html.DisplayFor(model => model.Created)*@
+            @Model.Created.ToString("MMMM dd, yyyy");
         </dd>
 
         <dt>
+            <br />
             @Html.DisplayNameFor(model => model.Updated)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Updated)
+            <br />
+            
+            @if (Model.Updated != null)
+            { 
+                @Model.Created.ToString("MMMM dd, yyyy");
+            }
+            else
+            { 
+                @Html.DisplayFor(model => model.Updated)
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketPiorityId)
+            <br />
+            @Html.DisplayNameFor(model => model.TicketPriorityId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TicketPiorityId)
+            <br />
+            @Html.DisplayFor(model => model.TicketPriority.PriorityName)
         </dd>
 
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+    @************************ Comments Start *************************@
+    <hr />
+    <div class="row">
+        @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")) || (Model.AssignedToUserId == User.Identity.GetUserId()) || (Model.OwnerUserId == User.Identity.GetUserId()))
+          {   
+            <h4 class="col-sm-offset-1">Add Comment</h4>
+            <div id="comment-form" class="comment-form col-sm-offset-1">
+                
+                <form action="@Url.Action("CreateComments")" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="ticketId" value="@Model.Id" />
+                    <input type="hidden" name="userId" value="@User.Identity.GetUserId()" />
+                    Comment : <textarea class="form-control" rows="3" placeholder="Message" name="Comments"></textarea><br>
+                    Upload Image : 
+                    <input name="image" type="file" class="form-control" id="fileUpload" /><br><br>
+                    Uploaded Image Description : <textarea class="form-control" rows="3" placeholder="File Description" name="FileDesc">
+                    </textarea>
+                    <br>
+                    <div class="col-md-offset-5 col-md-10">
+                        <input type="submit" value="Submit" class="btn btn-sm btn-primary" />
+                    </div>
+                </form>
+            </div>
+        }
+    </div>
+
+    <div class=" col-sm-offset-1">
+        <table class="table">
+            @foreach (var com in @Model.TicketComments)
+            {
+                <tr>
+                    <td>@com.Comments</td>
+                    <td>@com.FileDesc</td>
+                    <td>
+                        @if (com.FileUrl != null)
+                        {
+                            <a href="@com.FileUrl" target="_blank">
+                            <i class="fa fa-file"></i></a>
+                        }
+                    </td>
+                    <td>
+                        <small>Commented By:@com.User.FirstName</small>
+                    </td>
+
+
+
+                </tr>
+            }
+        </table>
+    </div>
+
+    </div>
+
+
+
+

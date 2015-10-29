@@ -10,13 +10,14 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
     <link href="~/Content/simplify.css" rel="stylesheet" />
+    <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-slider.css" rel="stylesheet" />
     <link href="~/Content/ionicons.min.css" rel="stylesheet" />
     <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
 
 </head>
-<body class="overflow-hidden">
+<body>
     
         <!--<header class="navbar front-end-navbar" data-spy="affix" data-offset-top="1">-->
             <header class="top-nav">
@@ -57,7 +58,7 @@
                             Main Menu
                         </li>
                         <li class="bg-palette1">
-                            <a href="@Url.Action("AuthorizedIndex", "Home")">
+                            <a href="@Url.Action("Index", "Home")">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
                                     <span class="text-white m-left-sm">Dashboard</span>
@@ -272,7 +273,8 @@
     <script src="../Scripts/skycons.js"></script>
     <script src="../Scripts/jquery.popupoverlay.min.js"></script>
     <script src="../Scripts/jquery.sortable.js"></script>
-
+    <script src="../Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
+    <script src="../Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
     @*<script src="Scripts/jquery-1.11.1.min.js"></script>*@
     @*<script src="~/Scripts/jquery.flot.min.js"></script>*@
     @*<script src="~/Scripts/owl.carousel.min.js"></script>*@
