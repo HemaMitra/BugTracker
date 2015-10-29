@@ -23,17 +23,32 @@
     </tr>
 
 @foreach (var item in Model) {
-    if(item.ProjectArchieved == false)
-    { 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectArchieved)
-        </td>
-    </tr>
+
+    if(User.IsInRole("Admin"))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectArchieved)
+            </td>
+        </tr>
     }
+    else
+    {
+        if(item.ProjectArchieved == false)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectArchieved)
+                </td>
+            </tr>
+        }
+     }
 }
 
 </table>

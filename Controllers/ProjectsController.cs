@@ -35,6 +35,7 @@ namespace BugTracker.Controllers
             return View(projects);
         }
 
+        [Authorize(Roles="Admin")]
         // GET: Projects/Create
         public ActionResult Create()
         {
@@ -45,6 +46,7 @@ namespace BugTracker.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles="Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,ProjectName,ProjectArchieve")] Projects projects)
         {
@@ -59,6 +61,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "Id,ProjectName,ProjectArchieve")] Projects projects)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +112,7 @@ namespace BugTracker.Controllers
         // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Projects projects = db.Projects.Find(id);

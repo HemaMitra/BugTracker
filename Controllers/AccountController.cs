@@ -77,27 +77,10 @@ namespace BugTracker.Controllers
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
 
-            // Hema
-            //var user = await UserManager.FindAsync(model.Email, model.Password);
-
-            //if (user != null)
-            //{
-            //    if (UserManager.IsInRole(user.Id, "Admin"))
-            //    {
-            //            return RedirectToAction("AdminIndex", "Admin");
-            //     }
-            //    if (UserManager.IsInRole(user.Id, "Moderator") || UserManager.IsInRole(user.Id,"Developer"))
-            //    {
-            //        return RedirectToAction("AuthorizedIndex", "Home");
-            //    }
-            //}
-            // End Hema
-
-            
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("AuthorizedIndex", "Home");
+                    return RedirectToAction("Index", "Tickets");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

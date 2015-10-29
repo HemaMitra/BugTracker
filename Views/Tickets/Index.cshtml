@@ -9,21 +9,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table id="ticketIndex">
+<table id="ticketIndex" class="display">
     <thead>
     <tr>
         <th>Assigned To</th>
         <th>Owned By</th>
         <th>Project Name</th>
         <th>Status</th>
-        @*<th>Ticket Type</th>*@
         <th>@Html.DisplayNameFor(model => model.Title)</th>
         <th>@Html.DisplayNameFor(model => model.Created)</th>
-        @*<th>@Html.DisplayNameFor(model => model.Updated)</th>*@
         <th>Priority</th>
-        @*@if(User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
-        {*@   <th> </th>  
-        @*}*@
+        <th> </th>  
     </tr>
    </thead>
 
@@ -50,12 +46,9 @@
             @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @*@Html.DisplayFor(modelItem => item.Created)*@
+   
             @item.Created.ToString("MM/dd/yy")
         </td>
-        @*<td>
-                @Html.DisplayFor(modelItem => item.Updated)
-            </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
         </td>

@@ -23,7 +23,14 @@ namespace BugTracker.Controllers
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
                 var proj = user.Projects.ToList();
-                var userTickets = proj.SelectMany(p => p.Tickets);
+                var userTickets = proj.SelectMany(p => p.Tickets).AsQueryable();
+
+                if (User.IsInRole("Submitter"))
+                {
+                    userTickets = userTickets.Where(t => t.OwnerUserId == User.Identity.GetUserId());
+                }
+
+
                 return View(userTickets.ToList());
             }
             var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
@@ -171,7 +178,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult CreateComments(TicketComments tc,HttpPostedFileBase image)
+        public ActionResult CreateComments(TicketComments tc,HttpPostedFileBase image,string backUrl)
         {
             // uploading image
             if (image != null && image.ContentLength > 0)
@@ -208,11 +215,34 @@ namespace BugTracker.Controllers
                 db.TicketComments.Add(tc);
                 db.SaveChanges();   
             }
+            if (backUrl.Equals("Edit"))
+            {
+                return RedirectToAction("Edit", "Tickets", new { id = tc.TicketId });
+            }
             return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
         }
 
+        // Edit Comment
+        public ActionResult EditComment(TicketComments tc)
+        {
+            if (ModelState.IsValid)
+            {
+            
+                TicketComments Comment = db.TicketComments.Find(tc.Id);
+                Comment.UpdatedBy = User.Identity.GetUserId();
+                Comment.UpdateDate = System.DateTimeOffset.Now;
+                Comment.Comments = tc.Comments;
+                Comment.FileDesc = tc.FileDesc;
+                db.TicketComments.Attach(Comment);
 
-
+                db.Entry(Comment).Property("UpdateDate").IsModified = true;
+                db.Entry(Comment).Property("Comments").IsModified = true;
+                db.Entry(Comment).Property("UpdatedBy").IsModified = true;
+                db.Entry(Comment).Property("FileDesc").IsModified = true;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
+        }
 
         protected override void Dispose(bool disposing)
         {

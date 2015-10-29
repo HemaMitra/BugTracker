@@ -19,6 +19,8 @@ namespace BugTracker.Models
         public string FileUrl { get; set; }
         public string FileDesc { get; set; }
         public System.DateTimeOffset CommentsCreated { get; set; }
+        public string UpdatedBy { get; set; }
+        public System.DateTimeOffset UpdateDate { get; set; }
         
         public virtual Tickets Ticket { get; set; }
         public virtual ApplicationUser User { get; set; }

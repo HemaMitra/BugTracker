@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿    <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -15,6 +15,7 @@
     <link href="~/Content/bootstrap-slider.css" rel="stylesheet" />
     <link href="~/Content/ionicons.min.css" rel="stylesheet" />
     <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/multi-select.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -86,19 +87,43 @@
                             
                                 <ul class="submenu bg-palette3">
                                     <li class="bg-palette3">
-                                        <a href="@Url.Action("Index","Projects")">
+                                        <a href="@Url.Action("AuthorizedIndex","Home")">
                                             <span class="menu-content block">
                                                 <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                                <span class="text-white m-left-sm">All Projects</span>
+                                                <span class="text-white m-left-sm">Assigned Projects</span>
                                             </span>
                                             <span class="menu-content-hover block">
-                                                All projects
+                                                Assigned projects
                                             </span>
                                         </a>
                                     </li>
 
-                           @if(User.IsInRole("Admin"))
+
+                           @if (User.IsInRole("Admin"))
                            {
+                            <li class="bg-palette3">
+                                <a href="@Url.Action("Index","Projects")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">All Projects</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        All projects
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Create", "Projects")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">Create Project</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        Create Project
+                                    </span>
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="@Url.Action("EditProject","Admin")">
                                     <span class="menu-content block">
@@ -110,17 +135,33 @@
                                     </span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="@Url.Action("ProjectList","Admin")">
+                                <a href="@Url.Action("ProjectList", "Admin")">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Assign Users</span>
+                                        <span class="text-white m-left-sm">Project Users</span>
                                     </span>
                                     <span class="menu-content-hover block">
-                                        Assign Users To Project
+                                        Project Users
                                     </span>
                                 </a>
                             </li>
+
+                            
+                            
+                            <li>
+                                <a href="@Url.Action("AdminIndex","Admin")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">Assign User Roles</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        Assign User Roles
+                                    </span>
+                                </a>
+                            </li>
+
                            }
                            @if(User.IsInRole("ProjectManager"))
                            { 
@@ -128,10 +169,10 @@
                                 <a href="@Url.Action("ProjectList","Admin")">
                                 <span class="menu-content block">       
                                 <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                <span class="text-white m-left-sm">Assign Users</span>
+                                <span class="text-white m-left-sm">Project Users</span>
                                 </span>
                                 <span class="menu-content-hover block">
-                                Edit Project
+                                Project Users
                                 </span>
                                 </a>
                             </li>
@@ -263,11 +304,11 @@
         
     
     
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     
-    <script src="../Scripts/jquery-2.1.4.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
+    @*<script src="../Scripts/jquery-2.1.4.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>*@
     <script src="../Scripts/simplify.js"></script>    
     <script src="../Scripts/jquery.slimscroll.min.js"></script>
     <script src="../Scripts/skycons.js"></script>
@@ -275,6 +316,7 @@
     <script src="../Scripts/jquery.sortable.js"></script>
     <script src="../Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
     <script src="../Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../Scripts/jquery.multi-select.js"></script>
     @*<script src="Scripts/jquery-1.11.1.min.js"></script>*@
     @*<script src="~/Scripts/jquery.flot.min.js"></script>*@
     @*<script src="~/Scripts/owl.carousel.min.js"></script>*@

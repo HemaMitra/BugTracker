@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace BugTracker.Controllers
 {
@@ -14,12 +15,26 @@ namespace BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         UserRoleHelpers roleHelpers = new UserRoleHelpers();
 
+        //// Get
+        //[Authorize(Roles = "Admin, ProjectManager")]
+        //public ActionResult ProjectList()
+        //{
+        //    return View(db.Projects.ToList());
+        //}
+
         // Get
         [Authorize(Roles = "Admin, ProjectManager")]
         public ActionResult ProjectList()
         {
+            if(User.IsInRole("ProjectManager"))
+            { 
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var proj = user.Projects.ToList();
+                return View(proj.ToList());
+            }
             return View(db.Projects.ToList());
         }
+
 
         // Get
         [Authorize(Roles = "Admin, ProjectManager")]
@@ -73,10 +88,6 @@ namespace BugTracker.Controllers
         }
 
 
-
-
-
-
         // GET: Admin
         [Authorize(Roles="Admin")]
         public ActionResult AdminIndex() 
@@ -125,6 +136,7 @@ namespace BugTracker.Controllers
             return RedirectToAction("AdminIndex");
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateProject()
         {
             return View();
