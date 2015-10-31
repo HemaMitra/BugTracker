@@ -13,7 +13,7 @@
     <hr />
     <div class="col-sm-offset-10">
         @Html.ActionLink("Back to List", "Index") 
-        @if (Model.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager"))
+        @if (Model.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager") || User.IsInRole("Admin"))
         {
             @Html.ActionLink("| Edit", "Edit", new { id = Model.Id })
         }

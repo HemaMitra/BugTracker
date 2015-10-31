@@ -52,7 +52,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
                 </td>
-                @if (@item.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager"))
+                @if (@item.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager") || User.IsInRole("Admin"))
                 {
                     <td>
                         @Html.ActionLink("Details", "Details", new { id = item.Id })|

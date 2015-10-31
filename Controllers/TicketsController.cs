@@ -22,20 +22,31 @@ namespace BugTracker.Controllers
         // GET: Tickets
         public ActionResult Index()
         {
-            if(User.IsInRole("ProjectManager") || User.IsInRole("Developer") || (User.IsInRole("Submitter")))
+            if(User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
                 var proj = user.Projects.ToList();
                 var userTickets = proj.SelectMany(p => p.Tickets).AsQueryable();
 
-                if (User.IsInRole("Submitter"))
-                {
-                    userTickets = userTickets.Where(t => t.OwnerUserId == User.Identity.GetUserId());
-                }
+                //if (User.IsInRole("Submitter"))
+                //{
+                //    userTickets = userTickets.Where(t => t.OwnerUserId == User.Identity.GetUserId());
+                //}
 
 
                 return View(userTickets.ToList());
             }
+
+            if (User.IsInRole("Submitter"))
+            {
+                var proj1 = db.Projects.ToList();
+                var userTickets1 = proj1.SelectMany(p => p.Tickets).AsQueryable();
+                userTickets1 = userTickets1.Where(t => t.OwnerUserId == User.Identity.GetUserId());
+                return View(userTickets1.ToList());
+            }
+
+
+
             var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
 
             return View(tickets.ToList());
@@ -68,9 +79,15 @@ namespace BugTracker.Controllers
             var proj = user.Projects.ToList();
             var proj1 = proj.Where(l => l.ProjectArchieved == false);
 
-
             //var proj = db.Projects.Where(l=>l.ProjectArchieved == false);
             ViewBag.ProjectId = new SelectList(proj1 , "Id", "ProjectName");
+
+            if (User.IsInRole("Submitter"))
+            {
+                var subProj = db.Projects.ToList();
+                var subProj1 = subProj.Where(l => l.ProjectArchieved == false);
+                ViewBag.ProjectId = new SelectList(subProj1, "Id", "ProjectName");
+            }
             //ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName");
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName");
             //Hema

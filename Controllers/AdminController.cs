@@ -48,6 +48,15 @@ namespace BugTracker.Controllers
             var selected = helper.ListOfUsers(projectId).Select(l=>l.Id);
 
             var userRole = roleHelpers.UsersInRole("Developer");
+            //// Hema
+            //var userRole = roleHelpers.UsersInRole("Developer").ToList();
+            //var user = db.Users.Find(User.Identity.GetUserId());
+            
+            //if(User.IsInRole("ProjectManager"))
+            //{ 
+            //        userRole.Add(user);
+            //}
+
 
             if (User.IsInRole("Admin"))
             {
@@ -83,6 +92,13 @@ namespace BugTracker.Controllers
                         helper.RemoveUserFromProject(projectId, user.Id);
                     }
                 }
+                // Hema
+                if(User.IsInRole("ProjectManager"))
+                {
+                    var user = db.Users.Find(User.Identity.GetUserId());
+                    helper.AddUserToProject(projectId, user.Id);
+                }
+
             }
             return RedirectToAction("ProjectList");
         }
