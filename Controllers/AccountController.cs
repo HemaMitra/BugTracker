@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTracker.Models;
+using BugTracker.Controllers.Helpers;
 
 namespace BugTracker.Controllers
 {
@@ -163,6 +164,9 @@ namespace BugTracker.Controllers
                      string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                      var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                      await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                     UserRoleHelpers roleHelper = new UserRoleHelpers();
+                     var role = roleHelper.AddUserToRole(user.Id, "Submitter");
 
                     return RedirectToAction("Index", "Home");
                 }

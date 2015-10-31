@@ -20,6 +20,8 @@
 
     @foreach (var item in Model)
     {
+        if(item.ProjectArchieved == false)
+        { 
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.ProjectName)
@@ -28,6 +30,7 @@
                 @Html.ActionLink("Add Users", "EditUserProject", new { projectId = item.Id })
             </td>
         </tr>
+        }
     }
 
 </table>

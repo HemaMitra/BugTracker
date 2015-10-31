@@ -182,12 +182,12 @@
                     <td>@com.FileDesc</td>
                     <td>@if(com.UpdatedBy != null)
                         { 
-                            @com.UpdatedBy  
-                            @com.UpdateDate.ToString("MM/dd/yy")
+                            @com.UpdatedBy <span>-</span> @com.UpdateDate.ToString("MM/dd/yy")
+                            
                         }
                     </td>
                     <td>
-                        @com.User.FirstName / @com.CommentsCreated.ToString("MM/dd/yy")
+                        @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")
                         @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin"))
                         {
                             

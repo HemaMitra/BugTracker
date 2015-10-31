@@ -34,11 +34,14 @@
 
             @foreach (var item in Model)
             {
+                if(item.ProjectArchieved == false)
+                { 
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProjectName)
                     </td>
                 </tr>
+                }
             }
 
         </table>

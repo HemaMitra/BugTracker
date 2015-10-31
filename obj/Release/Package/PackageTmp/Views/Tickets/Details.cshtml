@@ -1,98 +1,255 @@
 ﻿@model BugTracker.Models.Tickets
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Tickets</h4>
+
+<div class="padding-bt">
+    <br>
+    <h2>Ticket Details</h2>    
     <hr />
+    <div class="col-sm-offset-10">
+        @Html.ActionLink("Back to List", "Index") 
+        @if (Model.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager"))
+        {
+            @Html.ActionLink("| Edit", "Edit", new { id = Model.Id })
+        }
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AssignedToUser.FirstName)
-        </dt>
-
+        <dt>Assigned To :</dt>
         <dd>
             @Html.DisplayFor(model => model.AssignedToUser.FirstName)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnerUser.FirstName)
-        </dt>
+        <dt><br />Owner Name :</dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.OwnerUser.FirstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Project.ProjectName)
+            <br />
+            Project Name:
+            
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.Project.ProjectName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketStatus.StatusName)
+            <br />
+            Status :
+            
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.TicketStatus.StatusName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketType.TicketName)
+            <br />Ticket Type :
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.TicketType.TicketName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            <br />
+            @Html.DisplayNameFor(model => model.Title):
         </dt>
 
         <dd>
+            <br />
             @Html.DisplayFor(model => model.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            <br />
+            @Html.DisplayNameFor(model => model.Description):
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            <br />
+            @Html.Raw(@Model.Description)
+            
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Created)
+            <br />
+            @Html.DisplayNameFor(model => model.Created):
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Created)
+            <br />
+            
+            @Model.Created.ToString("MMMM dd, yyyy")
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Updated)
+            <br />
+            @Html.DisplayNameFor(model => model.Updated):
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Updated)
+            <br />
+            
+            @if (Model.Updated != null)
+            { 
+                @Model.Created.ToString("MMMM dd, yyyy");
+            }
+            else
+            { 
+                @Html.DisplayFor(model => model.Updated)
+            }
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TicketPiorityId)
+            <br />
+            Priority :
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.TicketPiorityId)
+            <br />
+            @Html.DisplayFor(model => model.TicketPriority.PriorityName)
         </dd>
 
     </dl>
+            </div> 
+        <div class="col-sm-5">
+            @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")) || (Model.AssignedToUserId == User.Identity.GetUserId()) || (Model.OwnerUserId == User.Identity.GetUserId()))
+            {
+                <h4 class="col-sm-offset-1">Add Comment</h4>
+                <div id="comment-form" class="comment-form col-sm-offset-1">
+
+                    <form action="@Url.Action("CreateComments")" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="ticketId" value="@Model.Id" />
+                        <input type="hidden" name="userId" value="@User.Identity.GetUserId()" />
+                        <input type="hidden" name="backurl" value="Details">
+                        Comment : <textarea class="form-control" rows="3" placeholder="Message" name="Comments"></textarea><br>
+                        Upload Image :
+                        <input name="image" type="file" class="form-control" id="fileUpload" /><br><br>
+                        Uploaded Image Description : <textarea class="form-control" rows="3" placeholder="File Description" name="FileDesc"></textarea>
+                        <br>
+                        <div class="col-md-offset-5 col-md-10">
+                            <input type="submit" value="Submit" class="btn btn-sm btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            }
+        </div>
+        </div>
+    @************************ Comments Start *************************@
+    <hr />
+    
+    <div class=" col-sm-offset-1">
+        @if (@Model.TicketComments.Count > 0)
+        { 
+            <H3>Comments</H3>
+        }
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Comments</td>
+                <td>File</td>
+                <td>File Description</td>
+                <td>Update Info</td>
+                <td>Created By</td>
+            </tr>
+            </thead>
+            @foreach (var com in @Model.TicketComments)
+            {
+                <tr>
+                    <td>@com.Comments</td>
+                    <td>
+                        @if (com.FileUrl != null)
+                        {
+                            <a href="@com.FileUrl" target="_blank">
+                                <i class="fa fa-file"></i>
+                            </a>
+                        }
+                    </td>
+                    <td>@com.FileDesc</td>
+                    <td>@if(com.UpdatedBy != null)
+                        { 
+                            @com.UpdatedBy <span>-</span> @com.UpdateDate.ToString("MM/dd/yy")
+                            
+                        }
+                    </td>
+                    <td>
+                        @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")
+                        @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin"))
+                        {
+                            
+                            <a href="" class="editcom" data-toggle="modal" data-target="#editcomment" data-comid1="@com.Id"
+                               data-userid1="@com.UserId" data-filedesc1="@com.FileDesc" data-ticketid1="@com.TicketId"
+                               data-comment1="@com.Comments">Edit</a>
+                            
+                        }
+                    </td>
+                    
+
+                </tr>
+            }
+        </table>
+    </div>
+
+    </div>
+
+<div class="modal fade" id="editcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Edit Comment</h4>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("EditComment")" method="post" role="form" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="Id1" name="Id" />
+                    <input type="hidden" id="UserId1" name="UserId" />
+                    <input type="hidden" id="TicketId1" name="TicketId" />
+                    Comments: <textarea type="text" class="form-control" id="Comments1" name="Comments"></textarea><br>
+                    Description : <textarea type="text" class="form-control" id="FileDesc1" name="FileDesc"></textarea><br>
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-sm btn-primary col-md-offset-4" />
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $('.editcom').click(function () {
+                $('#Id1').attr("value", $(this).data("comid1"));
+                $('#UserId1').val($(this).attr("data-userid1"));
+                $('#Comments1').val($(this).attr("data-comment1"));
+                $('#FileDesc1').val($(this).attr("data-filedesc1"));
+                $('#TicketId1').val($(this).attr("data-ticketid1"));
+                
+            })
+
+            $('.back').click(function () {
+            })
+
+
+    </script>
+}

@@ -7,7 +7,7 @@
 
 <form action="@Url.Action("EditUserRole", new { userId = Model.User.Id })" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
-
+    <br><br>
     <div class="row">
         <div class="col-md-5">
             @Html.LabelFor(model => model.User)
@@ -16,12 +16,15 @@
             @Html.DisplayFor(model => model.User.UserName) 
         </div>
     </div>
+    <BR><BR>
     <div class="row">
         <div class="col-md-5">
             @Html.LabelFor(model => model.Roles)
         </div>
         <div class="col-md-7">
-            @Html.ListBoxFor(model => model.SelectedRoles, Model.Roles, new { @class = "form-control"})
+            All Roles<span class="col-md-offset-3">Selected Roles</span>
+            @Html.ListBoxFor(model => model.SelectedRoles, Model.Roles, new { @class = "form-control", id = "my-select" , name="my-select[]"})
+            
         </div>
     </div>
 
@@ -30,3 +33,9 @@
     </div>
 
 </form>
+@section Scripts
+{
+    <script type="text/javascript">
+        $('#my-select').multiSelect();
+    </script>
+}

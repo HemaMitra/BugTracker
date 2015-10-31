@@ -1,55 +1,31 @@
 ﻿@model IEnumerable<BugTracker.Models.Tickets>
-
+@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Tickets Index</h2>
+<h2>All Tickets</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table table-bordered">
+<table id="ticketIndex" class="display">
+    <thead>
     <tr>
-        <th>
-            Assigned To
-            @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
-        </th>
-        <th>
-            Owned By
-            @*@Html.DisplayNameFor(model => model.OwnerUser.FirstName)*@
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Project.ProjectName)
-        </th>
-        <th>
-            Status
-            @*@Html.DisplayNameFor(model => model.TicketStatus.StatusName)*@
-        </th>
-        <th>
-            Ticket Type
-            @*@Html.DisplayNameFor(model => model.TicketType.TicketName)*@
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Updated)
-        </th>
-        <th>
-            Priority
-            @*@Html.DisplayNameFor(model => model.TicketPiorityId)*@
-        </th>
-        
+        <th>Assigned To</th>
+        <th>Owned By</th>
+        <th>Project Name</th>
+        <th>Status</th>
+        <th>@Html.DisplayNameFor(model => model.Title)</th>
+        <th>@Html.DisplayNameFor(model => model.Created)</th>
+        <th>Priority</th>
+        <th> </th>  
     </tr>
+   </thead>
 
-@foreach (var item in Model) {
+    <tbody>
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
@@ -63,31 +39,43 @@
         <td>
             @Html.DisplayFor(modelItem => item.TicketStatus.StatusName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TicketType.TicketName)
-        </td>
+        @*<td>
+                @Html.DisplayFor(modelItem => item.TicketType.TicketName)
+            </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>*@
         <td>
-            @Html.DisplayFor(modelItem => item.Created)
+   
+            @item.Created.ToString("MM/dd/yy")
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Updated)
+            @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
         </td>
-        <td>
-            
-            @Html.DisplayFor(modelItem => item.TicketPiorityId)
-        </td>
-       @* <td>
-    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-     @Html.ActionLink("Details", "Details", new { id=item.Id })
-     @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>*@
+        @if (@item.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager"))
+        {
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id })|
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            </td>
+        }
+        else
+        {
+            <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
+        }
+        
     </tr>
 }
+        </tbody>
 
 </table>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#ticketIndex').DataTable();
+        });
+    
+    </script>
+}

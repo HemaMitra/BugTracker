@@ -8,49 +8,276 @@
         @Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/Content/style.css" rel="stylesheet" />
-    <link href="~/Content/simplify.css" rel="stylesheet" />
-    <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="~/Content/animate.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-slider.css" rel="stylesheet" />
     <link href="~/Content/ionicons.min.css" rel="stylesheet" />
+    <link href="~/Content/morris.css" rel="stylesheet" />
+    <link href="~/Content/animate.css" rel="stylesheet" />
+    <link href="~/Content/owl.carousel.css" rel="stylesheet" />
     <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/simplify.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    
+    <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
+    
+    @*<link href="~/Content/bootstrap-slider.css" rel="stylesheet" />*@
+    
+    
     <link href="~/Content/multi-select.css" rel="stylesheet" />
 
 </head>
-<body>
-    
-        <!--<header class="navbar front-end-navbar" data-spy="affix" data-offset-top="1">-->
-            <header class="top-nav">
-            <div class="container">
-                <div class="navbar-header">
-                    <i class="fa fa-bug fa-lg padding-tp1"></i>
-                    
-                    <button class="navbar-toggle pull-left sidebar-toggle" type="button" id="sidebarToggleSM">
-                        <span class="sr-only">Toggle navigation</span>
+
+<body class="overflow-hidden">
+    <div class="wrapper preload">
+        <div class="sidebar-right">
+            <div class="sidebar-inner scrollable-sidebar">
+                <div class="sidebar-header clearfix">
+                    <input class="form-control dark-input" placeholder="Search" type="text">
+                    <div class="btn-group pull-right">
+                        <a href="#" class="sidebar-setting" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
+                        <ul class="dropdown-menu pull-right flipInV">
+                            <li><a href="#"><i class="fa fa-circle text-danger"></i><span class="m-left-xs">Busy</span></a></li>
+                            <li><a href="#"><i class="fa fa-circle-o"></i><span class="m-left-xs">Turn Off Chat</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="title-block">
+                    Group Chat
+                </div>
+                <div class="content-block">
+                    <ul class="sidebar-list">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-success"></i><span class="m-left-xs">Close Friends</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-circle-o text-success"></i><span class="m-left-xs">Business</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="title-block">
+                    Favorites
+                </div>
+                <div class="content-block">
+                    <ul class="sidebar-list">
+                        <li>
+                            <a href="#" class="clearfix">
+                                
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Where are you?
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-success"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <span class="badge badge-purple bounceIn animation-delay2">2</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                               
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        Jane Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Hello
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-success"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <span class="badge badge-info bounceIn animation-delay2">1</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                                
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        See you again next week.
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-danger"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <i class="fa fa-check text-success"></i>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                                
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Hello, Are you there?
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-danger"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <i class="fa fa-reply"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="title-block">
+                    More friends
+                </div>
+                <div class="content-block">
+                    <ul class="sidebar-list">
+                        <li>
+                            <a href="#" class="clearfix">
+                               
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Where are you?
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-success"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <span class="badge badge-success bounceIn animation-delay2">2</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                                
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        Jane Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Hello
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-success"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <span class="badge badge-danger bounceIn animation-delay2">1</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                               
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        See you again next week.
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-danger"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <i class="fa fa-check text-success"></i>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="clearfix">
+                                
+                                <div class="chat-detail m-left-sm">
+                                    <div class="chat-name">
+                                        John Doe
+                                    </div>
+                                    <div class="chat-message">
+                                        Hello, Are you there?
+                                    </div>
+                                </div>
+                                <div class="chat-status">
+                                    <i class="fa fa-circle-o text-danger"></i>
+                                </div>
+                                <div class="chat-alert">
+                                    <i class="fa fa-reply"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- sidebar-inner -->
+        </div><!-- sidebar-right -->
+        <header class="top-nav">
+            <div class="top-nav-inner">
+                <div class="nav-header">
+                    <button type="button" class="navbar-toggle pull-left sidebar-toggle" id="sidebarToggleSM">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    
-                    <strong class="font-16"><span class="text-success">Hema</span>Mitra</strong>
+
+                    <ul class="nav-notification pull-right">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
+                            <span class="badge badge-danger bounceIn">1</span>
+                            <ul class="dropdown-menu dropdown-sm pull-right user-dropdown">
+                                <li class="user-avatar">
+                                    <div class="user-content">
+                                        @*<h5 class="no-m-bottom">Jane Doe</h5>*@
+                                        <div class="m-top-xs">
+                                            @*<a href="profile.html" class="m-right-sm">Profile</a>
+                                            <a href="signin.html">Log out</a>*@
+                                            @Html.Partial("_LoginPartial")
+                                        </div>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </li>   
+                    </ul>
+
+                    <a href="index.html" class="brand">
+                        <i class="fa fa-database"></i><span class="brand-name">HEMA MITRA</span>
+                    </a>
                 </div>
-
-
-                @*<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-                        <h3>
-                            <strong>
-                                <span class="text-success">Hema</span> Mitra
-                            </strong>
-                        </h3>
-
-                    </nav>*@
-                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-                    @Html.Partial("_LoginPartial")
-                </nav>
-            </div>
+                <div class="nav-container">
+                    <button type="button" class="navbar-toggle pull-left sidebar-toggle" id="sidebarToggleLG">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <ul class="nav-notification">
+                        <li class="search-list">
+                            <div class="search-input-wrapper">
+                                <div class="search-input">
+                                    
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="pull-right m-right-sm">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
+            </div><!-- ./top-nav-inner -->
         </header>
-
         <aside class="sidebar-menu fixed">
             <div class="sidebar-inner scrollable-sidebar">
                 <div class="main-menu">
@@ -58,274 +285,198 @@
                         <li class="menu-header">
                             Main Menu
                         </li>
-                        <li class="bg-palette1">
+                        <li class="bg-palette1 active">
                             <a href="@Url.Action("Index", "Home")">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
-                                    <span class="text-white m-left-sm">Dashboard</span>
+                                    <span class="text m-left-sm">Dashboard</span>
                                 </span>
                                 <span class="menu-content-hover block">
                                     Home
                                 </span>
                             </a>
                         </li>
-                       
-
+                        
 
                         @if (Request.IsAuthenticated)
                         {
-                            <li class="openable bg-palette2">
-                                <a href="#">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Projects</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Projects
-                                    </span>
-                                </a>
                             
-                                <ul class="submenu bg-palette3">
-                                    <li class="bg-palette3">
-                                        <a href="@Url.Action("AuthorizedIndex","Home")">
-                                            <span class="menu-content block">
-                                                <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                                <span class="text-white m-left-sm">Assigned Projects</span>
-                                            </span>
-                                            <span class="menu-content-hover block">
-                                                Assigned projects
-                                            </span>
-                                        </a>
-                                    </li>
-
-
-                           @if (User.IsInRole("Admin"))
-                           {
-                            <li class="bg-palette3">
-                                <a href="@Url.Action("Index","Projects")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">All Projects</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        All projects
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Create", "Projects")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Create Project</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Create Project
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="@Url.Action("EditProject","Admin")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Edit Project</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Edit Project
-                                    </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="@Url.Action("ProjectList", "Admin")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Project Users</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Project Users
-                                    </span>
-                                </a>
-                            </li>
-
-                            
-                            
-                            <li>
-                                <a href="@Url.Action("AdminIndex","Admin")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Assign User Roles</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Assign User Roles
-                                    </span>
-                                </a>
-                            </li>
-
-                           }
-                           @if(User.IsInRole("ProjectManager"))
-                           { 
-                            <li>
-                                <a href="@Url.Action("ProjectList","Admin")">
-                                <span class="menu-content block">       
-                                <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                <span class="text-white m-left-sm">Project Users</span>
+                        <li class="openable bg-palette2">
+                            <a href="#">
+                                <span class="menu-content block">
+                                    <span class="menu-icon"><i class="block fa fa-list fa-lg"></i></span>
+                                    <span class="text m-left-sm">Projects</span>
+                                    <span class="submenu-icon"></span>
                                 </span>
                                 <span class="menu-content-hover block">
-                                Project Users
+                                    Projects
                                 </span>
-                                </a>
-                            </li>
-                           }
+                            </a>
+                            <ul class="submenu bg-palette3">
+                                <li><a href="@Url.Action("AuthorizedIndex","Home")"><span class="submenu-label">Assigned Projects</span></a></li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a href="@Url.Action("Index","Projects")"><span class="submenu-label">All Projects
+                                    </span></a></li>
+                                <li><a href="@Url.Action("Create", "Projects")"><span class="submenu-label">Create Project</span></a></li>
+                                <li><a href="@Url.Action("EditProject","Admin")"><span class="submenu-label">Edit Project
+                                    </span></a></li>
+                                <li>
+                                    <a href="@Url.Action("ProjectList", "Admin")">
+                                        <span class="submenu-label">
+                                            Project Users
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("AdminIndex","Admin")">
+                                        <span class="submenu-label">
+                                            Assign User Roles
+                                        </span>
+                                    </a>
+                                </li>
 
 
-                           </ul>
-                          </li>
-                       
-                         }
-                                    
-                        @if (Request.IsAuthenticated)
-                        {
-                            <li class="openable bg-palette3">
-                                @*<a href="@Url.Action("Index","Tickets")">-->*@
-                                <a href="#">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-list fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Tickets</span>
-
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Tickets
-                                    </span>
-                                </a>
-                                <ul class="submenu bg-palette4">
-
+                                }
+                                
+                                @if (User.IsInRole("ProjectManager"))
+                                {
                                     <li>
-                                        <a href="@Url.Action("Index","Tickets")">
-                                            <span class="menu-content block">
-                                                <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                <span class="text-white m-left-sm">All Tickets</span>
-                                            </span>
-                                            <span class="menu-content-hover block">
-                                                All Tickets
+                                        <a href="@Url.Action("ProjectList", "Admin")">
+                                            <span class="submenu-label">
+                                                Project Users
                                             </span>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="@Url.Action("Create","Tickets")">
-                                            <span class="menu-content block">
-                                                <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                <span class="text-white m-left-sm">Create Tickets</span>
-                                            </span>
-                                            <span class="menu-content-hover block">
-                                                Create Tickets
-                                            </span>
-                                        </a>
-                                    </li>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <li>
-                                            <a href="@Url.Action("Index","TicketPriorities")">
-                                                <span class="menu-content block">
-                                                    <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text-white m-left-sm">Tickets Priority</span>
-                                                </span>
-                                                <span class="menu-content-hover block">
-                                                    Tickets Priority
-                                                </span>
-                                            </a>
-                                        </li>
-                                         <li>
-                                            <a href="@Url.Action("Index","TicketStatus")">
-                                                <span class="menu-content block">
-                                                    <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text-white m-left-sm">Ticket Status</span>
-                                                </span>
-                                                <span class="menu-content-hover block">
-                                                    Ticket Status
-                                                </span>
-                                            </a>
-                                        </li>
+                                }
 
-                                         <li>
-                                            <a href="@Url.Action("Index","TicketTypes")">
-                                                <span class="menu-content block">
-                                                    <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text-white m-left-sm">Ticket Types</span>
-                                                </span>
-                                                <span class="menu-content-hover block">
-                                                    Ticket Types
-                                                </span>
-                                            </a>
-                                        </li>
-                                    }
-
-
-
-
-
-
-                                </ul>
-                            </li>
-                        }    
-                    
+                            </ul>
+                        </li>
+                            
                         
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="bg-palette5">
-                                <a href="@Url.Action("AdminIndex","Admin")">
-                                    <span class="menu-content block">
-                                        <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                        <span class="text-white m-left-sm">Admin Index</span>
-                                    </span>
-                                    <span class="menu-content-hover block">
-                                        Admin Index
-                                    </span>
-                                </a>
-                            </li>
+                        <li class="openable bg-palette4">
+                            <a href="#">
+                                <span class="menu-content block">
+                                    <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
+                                    <span class="text m-left-sm">Tickets</span>
+                                    <span class="submenu-icon"></span>
+                                </span>
+                                <span class="menu-content-hover block">
+                                    Tickets
+                                </span>
+                            </a>
+                            <ul class="submenu bg-palette5">
+                                
+                                <li><a href="@Url.Action("Index","Tickets")"><span class="submenu-label">All Tickets</span></a></li>
+
+                                <li><a href="@Url.Action("Create","Tickets")"><span class="submenu-label">Create Ticket</span></a></li>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+
+                                <li><a href="@Url.Action("Index","TicketPriorities")"><span class="submenu-label">Ticket Priorities</span></a></li>
+                                
+                                <li><a href="@Url.Action("Index","TicketStatus")"><span class="submenu-label">Ticket Status</span></a></li>
+                                
+                                <li><a href="@Url.Action("Index","TicketTypes")"><span class="submenu-label">Ticket Types</span></a></li>
+                                }
+                            </ul>
+                        </li>
+                        
                         }
-
+                        <li class="menu-header">
+                            Others
+                        </li>
                         
-
+                        
                     </ul>
                 </div>
-                
+                @*<div class="sidebar-fix-bottom clearfix">
+                    <div class="user-dropdown dropup pull-left">
+                        
+                    </div>
+                    @*<a href="lockscreen.html" class="pull-right font-18"><i class="ion-log-out"></i></a>
+                </div>*@
             </div><!-- sidebar-inner -->
         </aside>
 
         <div class="main-container">
-            <div class="padding-lg">
-                <!------Hema--------->
-                @RenderBody()
-            </div>
-        </div>
+            <div class="padding-md">
+                @*<div class="row">
+                    <div class="col-sm-6">
+                        <div class="page-title">
+                            Dashboard
+                        </div>
+                    </div>
+                </div>*@
+                
+                    @RenderBody()
+                
+            </div><!-- ./padding-md -->
+        </div><!-- /main-container -->
+        <footer class="footer">
+            <span class="footer-brand">
+                <strong class="text-danger">Hema</strong> Mitra
+            </span>
+            <p class="no-margin">
+                &copy; 2015 <strong>Hema Mitra</strong>. ALL Rights Reserved.
+            </p>
+        </footer>
+    </div><!-- /wrapper -->
+    
+    <!-- Delete Widget Confirmation -->
+    
 
-        
-        
     
-    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @*<!-- Jquery -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+
+    <!-- Bootstrap -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>*@
+
+    <!-- Flot -->
+    @*<script src='/js/jquery.flot.min.js'></script>*@
+    <!-- Slimscroll -->
+    <script src='/js/jquery.slimscroll.min.js'></script>
+
+    <!-- Morris -->
+    <script src='/js/rapheal.min.js'></script>
+    <script src='/js/morris.min.js'></script>
+    <!-- Sparkline -->
+    <script src='/js/sparkline.min.js'></script>
     
-    @*<script src="../Scripts/jquery-2.1.4.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>*@
-    <script src="../Scripts/simplify.js"></script>    
-    <script src="../Scripts/jquery.slimscroll.min.js"></script>
-    <script src="../Scripts/skycons.js"></script>
-    <script src="../Scripts/jquery.popupoverlay.min.js"></script>
-    <script src="../Scripts/jquery.sortable.js"></script>
-    <script src="../Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
-    <script src="../Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-    <script src="../Scripts/jquery.multi-select.js"></script>
-    @*<script src="Scripts/jquery-1.11.1.min.js"></script>*@
-    @*<script src="~/Scripts/jquery.flot.min.js"></script>*@
-    @*<script src="~/Scripts/owl.carousel.min.js"></script>*@
-    @*<script src="../Scripts/simplify_dashboard.js"></script>*@
+    <!-- Popup Overlay -->
+    <script src='/js/jquery.popupoverlay.min.js'></script>
+    <!-- Easy Pie Chart -->
+    <script src='/js/jquery.easypiechart.min.js'></script>
+    <!-- Owl Carousel -->
+    <script src='/js/owl.carousel.min.js'></script>
+    <!-- Modernizr -->
+    <script src='/js/modernizr.min.js'></script>
+
+    <!-- Simplify -->
+    <script src="/js/simplify/simplify.js"></script>
+    @*<script src="/js/simplify/simplify_dashboard.js"></script>*@
+    
+    <script src="/Scripts/jquery.multi-select.js"></script>
 
     @RenderSection("scripts", required: false)
+    <script src="/Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
+    <script src="/Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    
+
+
+
+    
 
 </body>
-
 
 
 </html>

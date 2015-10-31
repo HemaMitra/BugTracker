@@ -3,25 +3,29 @@
     ViewBag.Title = "Edit User Project";
 }
 
-<h2>Edit User Project</h2>
+<h2>Assign users To Projects</h2>
 
 <form action="@Url.Action("EditUserProject", new { projectId = Model.Project.Id})" method="post" enctype="multipart/form-data">
     @Html.AntiForgeryToken()
-
+    <br><br>
     <div class="row">
         <div class="col-md-5">
-            @Html.LabelFor(model => model.Project.ProjectName)
+            Project Name
         </div>
         <div class="col-md-7">
             @Html.DisplayFor(model => model.Project.ProjectName) 
         </div>
     </div>
+    <br><br>
+    
     <div class="row">
         <div class="col-md-5">
-            @Html.LabelFor(model => model.ApplicationUser)
+            Users
         </div>
         <div class="col-md-7">
-            @Html.ListBoxFor(model => model.SelectedUsers, Model.ApplicationUser, new { @class = "form-control"})
+            All Users<span class="col-md-offset-4">Selected Users</span>
+            @Html.ListBoxFor(model => model.SelectedUsers, Model.ApplicationUser, 
+            new { @class = "form-control", id = "my-select", name = "my-select[]" })
         </div>
     </div>
 
@@ -30,3 +34,9 @@
     </div>
 
 </form>
+@section Scripts
+{
+    <script type="text/javascript">
+        $('#my-select').multiSelect();
+    </script>
+}

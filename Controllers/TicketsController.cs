@@ -8,7 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System.IO;
+using BugTracker.Controllers.Helpers;
 
 namespace BugTracker.Controllers
 {
@@ -16,6 +18,7 @@ namespace BugTracker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        
         // GET: Tickets
         public ActionResult Index()
         {
@@ -94,9 +97,7 @@ namespace BugTracker.Controllers
             }
 
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
-            //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
-            //ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName", tickets.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName", tickets.TicketTypeId);
             ViewBag.TicketStatusId = new SelectList(db.TicketPriority, "Id", "PriorityName", tickets.TicketPriorityId);
             return View(tickets);
@@ -105,6 +106,8 @@ namespace BugTracker.Controllers
         // GET: Tickets/Edit/5
         public ActionResult Edit(int? id)
         {
+            UserRoleHelpers roleHelpers = new UserRoleHelpers();
+            UserProjectHelpers helper = new UserProjectHelpers();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -116,11 +119,18 @@ namespace BugTracker.Controllers
             }
             var projId = db.Projects.Find(tickets.ProjectId);
             var projUsers = projId.Users.ToList();
+            var resultList = new List<ApplicationUser>(); 
 
-            //ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
-            ViewBag.AssignedToUserId = new SelectList(projUsers, "Id", "FirstName", tickets.AssignedToUserId);
-            //ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
-            //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
+            foreach (var user in projUsers)
+            {
+                if (roleHelpers.IsUserInRole(user.Id,"Developer"))
+                {
+                    resultList.Add(user);
+                }
+            }
+
+            //ViewBag.AssignedToUserId = new SelectList(projUsers, "Id", "FirstName", tickets.AssignedToUserId);
+            ViewBag.AssignedToUserId = new SelectList(resultList, "Id", "FirstName", tickets.AssignedToUserId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName", tickets.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName", tickets.TicketTypeId);
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "PriorityName", tickets.TicketPriorityId);
@@ -229,7 +239,7 @@ namespace BugTracker.Controllers
             {
             
                 TicketComments Comment = db.TicketComments.Find(tc.Id);
-                Comment.UpdatedBy = User.Identity.GetUserId();
+                Comment.UpdatedBy = User.Identity.GetUserName();
                 Comment.UpdateDate = System.DateTimeOffset.Now;
                 Comment.Comments = tc.Comments;
                 Comment.FileDesc = tc.FileDesc;

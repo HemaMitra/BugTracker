@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿    <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,13 +10,15 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
     <link href="~/Content/simplify.css" rel="stylesheet" />
+    <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-slider.css" rel="stylesheet" />
     <link href="~/Content/ionicons.min.css" rel="stylesheet" />
     <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/multi-select.css" rel="stylesheet" />
 
 </head>
-<body class="overflow-hidden">
+<body>
     
         <!--<header class="navbar front-end-navbar" data-spy="affix" data-offset-top="1">-->
             <header class="top-nav">
@@ -57,10 +59,10 @@
                             Main Menu
                         </li>
                         <li class="bg-palette1">
-                            <a href="@Url.Action("AuthorizedIndex", "Home")">
+                            <a href="@Url.Action("Index", "Home")">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
-                                    <span class="text m-left-sm">Dashboard</span>
+                                    <span class="text-white m-left-sm">Dashboard</span>
                                 </span>
                                 <span class="menu-content-hover block">
                                     Home
@@ -76,7 +78,7 @@
                                 <a href="#">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text m-left-sm">Projects</span>
+                                        <span class="text-white m-left-sm">Projects</span>
                                     </span>
                                     <span class="menu-content-hover block">
                                         Projects
@@ -85,41 +87,81 @@
                             
                                 <ul class="submenu bg-palette3">
                                     <li class="bg-palette3">
-                                        <a href="@Url.Action("Index","Projects")">
+                                        <a href="@Url.Action("AuthorizedIndex","Home")">
                                             <span class="menu-content block">
                                                 <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                                <span class="text m-left-sm">All Projects</span>
+                                                <span class="text-white m-left-sm">Assigned Projects</span>
                                             </span>
                                             <span class="menu-content-hover block">
-                                                All projects
+                                                Assigned projects
                                             </span>
                                         </a>
                                     </li>
 
-                           @if(User.IsInRole("Admin"))
+
+                           @if (User.IsInRole("Admin"))
                            {
+                            <li class="bg-palette3">
+                                <a href="@Url.Action("Index","Projects")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">All Projects</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        All projects
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Create", "Projects")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">Create Project</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        Create Project
+                                    </span>
+                                </a>
+                            </li>
+
                             <li>
                                 <a href="@Url.Action("EditProject","Admin")">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text m-left-sm">Edit Project</span>
+                                        <span class="text-white m-left-sm">Edit Project</span>
                                     </span>
                                     <span class="menu-content-hover block">
                                         Edit Project
                                     </span>
                                 </a>
                             </li>
+
                             <li>
-                                <a href="@Url.Action("ProjectList","Admin")">
+                                <a href="@Url.Action("ProjectList", "Admin")">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                        <span class="text m-left-sm">Assign Users</span>
+                                        <span class="text-white m-left-sm">Project Users</span>
                                     </span>
                                     <span class="menu-content-hover block">
-                                        Assign Users To Project
+                                        Project Users
                                     </span>
                                 </a>
                             </li>
+
+                            
+                            
+                            <li>
+                                <a href="@Url.Action("AdminIndex","Admin")">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
+                                        <span class="text-white m-left-sm">Assign User Roles</span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        Assign User Roles
+                                    </span>
+                                </a>
+                            </li>
+
                            }
                            @if(User.IsInRole("ProjectManager"))
                            { 
@@ -127,10 +169,10 @@
                                 <a href="@Url.Action("ProjectList","Admin")">
                                 <span class="menu-content block">       
                                 <span class="menu-icon"><i class="block fa fa-desktop fa-lg"></i></span>
-                                <span class="text m-left-sm">Assign Users</span>
+                                <span class="text-white m-left-sm">Project Users</span>
                                 </span>
                                 <span class="menu-content-hover block">
-                                Edit Project
+                                Project Users
                                 </span>
                                 </a>
                             </li>
@@ -149,7 +191,7 @@
                                 <a href="#">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-list fa-lg"></i></span>
-                                        <span class="text m-left-sm">Tickets</span>
+                                        <span class="text-white m-left-sm">Tickets</span>
 
                                     </span>
                                     <span class="menu-content-hover block">
@@ -162,7 +204,7 @@
                                         <a href="@Url.Action("Index","Tickets")">
                                             <span class="menu-content block">
                                                 <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                <span class="text m-left-sm">All Tickets</span>
+                                                <span class="text-white m-left-sm">All Tickets</span>
                                             </span>
                                             <span class="menu-content-hover block">
                                                 All Tickets
@@ -173,7 +215,7 @@
                                         <a href="@Url.Action("Create","Tickets")">
                                             <span class="menu-content block">
                                                 <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                <span class="text m-left-sm">Create Tickets</span>
+                                                <span class="text-white m-left-sm">Create Tickets</span>
                                             </span>
                                             <span class="menu-content-hover block">
                                                 Create Tickets
@@ -186,7 +228,7 @@
                                             <a href="@Url.Action("Index","TicketPriorities")">
                                                 <span class="menu-content block">
                                                     <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text m-left-sm">Tickets Priority</span>
+                                                    <span class="text-white m-left-sm">Tickets Priority</span>
                                                 </span>
                                                 <span class="menu-content-hover block">
                                                     Tickets Priority
@@ -197,7 +239,7 @@
                                             <a href="@Url.Action("Index","TicketStatus")">
                                                 <span class="menu-content block">
                                                     <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text m-left-sm">Ticket Status</span>
+                                                    <span class="text-white m-left-sm">Ticket Status</span>
                                                 </span>
                                                 <span class="menu-content-hover block">
                                                     Ticket Status
@@ -209,7 +251,7 @@
                                             <a href="@Url.Action("Index","TicketTypes")">
                                                 <span class="menu-content block">
                                                     <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                                    <span class="text m-left-sm">Ticket Types</span>
+                                                    <span class="text-white m-left-sm">Ticket Types</span>
                                                 </span>
                                                 <span class="menu-content-hover block">
                                                     Ticket Types
@@ -234,7 +276,7 @@
                                 <a href="@Url.Action("AdminIndex","Admin")">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                        <span class="text m-left-sm">Admin Index</span>
+                                        <span class="text-white m-left-sm">Admin Index</span>
                                     </span>
                                     <span class="menu-content-hover block">
                                         Admin Index
@@ -262,17 +304,19 @@
         
     
     
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     
-    <script src="../Scripts/jquery-2.1.4.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
+    @*<script src="../Scripts/jquery-2.1.4.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>*@
     <script src="../Scripts/simplify.js"></script>    
     <script src="../Scripts/jquery.slimscroll.min.js"></script>
     <script src="../Scripts/skycons.js"></script>
     <script src="../Scripts/jquery.popupoverlay.min.js"></script>
     <script src="../Scripts/jquery.sortable.js"></script>
-
+    <script src="../Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
+    <script src="../Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+    <script src="../Scripts/jquery.multi-select.js"></script>
     @*<script src="Scripts/jquery-1.11.1.min.js"></script>*@
     @*<script src="~/Scripts/jquery.flot.min.js"></script>*@
     @*<script src="~/Scripts/owl.carousel.min.js"></script>*@

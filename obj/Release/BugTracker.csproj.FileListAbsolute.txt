@@ -55,3 +55,7 @@ C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Mi
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\obj\Release\BugTracker.csprojResolveAssemblyReference.cache
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\obj\Release\BugTracker.dll
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\obj\Release\BugTracker.pdb
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.dll
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.Mvc.dll
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.xml
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.Mvc.xml

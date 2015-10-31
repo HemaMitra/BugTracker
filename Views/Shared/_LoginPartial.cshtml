@@ -8,11 +8,11 @@
     <ul class="nav navbar-nav navbar-right">
         <li class="btn-link">
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null,
-             htmlAttributes: new { title = "Manage", @class = "btn btn-sm btn-primary"})
+             htmlAttributes: new { title = "Manage"})
         </li>
 
         <li class="btn-link">
-            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-sm btn-primary">Log off</a>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
         </li>
     </ul>
     }
@@ -22,12 +22,12 @@ else
     <ul class="nav navbar-nav navbar-right">
         <li class="btn-link">
             @Html.ActionLink("Register", "Register", "Account", routeValues: null,
-                htmlAttributes: new { id = "registerLink", @class="btn btn-sm btn-primary"})
+                htmlAttributes: new { id = "registerLink"})
     </li>
 
         <li class="btn-link">
             @Html.ActionLink("Log in", "Login", "Account", routeValues: null,
-                htmlAttributes: new { id = "loginLink", @class="btn btn-sm btn-primary"})
+                htmlAttributes: new { id = "loginLink"})
     </li>
 
     </ul>
