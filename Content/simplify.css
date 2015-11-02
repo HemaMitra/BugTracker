@@ -865,9 +865,7 @@ a.list-group-item.active:focus {
 .sidebar-menu .main-menu ul li a:hover,
 .sidebar-menu .main-menu ul li a:focus {
   color: white;
-  /*text-decoration: none;*/
-  text-decoration:underline;
-  
+  text-decoration: none;
   transition: color 0.4s ease;
   -webkit-transition: color 0.4s ease;
   -moz-transition: color 0.4s ease;
@@ -916,7 +914,8 @@ a.list-group-item.active:focus {
 .sidebar-menu .main-menu ul li .submenu li a {
   position: relative;
   background-color: #131e25;
-  color: #7ca0bb;
+  /*color: #7ca0bb;*/
+  color:white;
   font-weight: normal;
   padding-top: 9px;
   padding-bottom: 9px;
@@ -942,6 +941,8 @@ a.list-group-item.active:focus {
   -moz-transition: all 0.2s ease;
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
+  /* Hema */
+  font-weight:bold;
 }
 .sidebar-menu .main-menu ul li .submenu li a .badge {
   top: 8px;
@@ -2309,6 +2310,19 @@ a.list-group-item.active:focus {
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
 }
+
+/* Hema */
+
+.statistic-box1 {
+  padding: 20px;
+  text-align: left;
+  position: relative;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+}
+
+/* End Hema */
 .statistic-box .statistic-title {
   text-transform: uppercase;
   font-size: 16px;

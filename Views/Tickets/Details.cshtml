@@ -157,7 +157,53 @@
         { 
             <H3>Comments</H3>
         }
-        <table class="table">
+        @foreach (var com in @Model.TicketComments)
+        {
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="statistic-box1 bg-light">
+                        @com.Comments<br>
+                        @if (com.FileUrl != null)
+                        {
+                            <span>
+                                File Description : @com.FileDesc
+                                <span class="pull-right">
+                                    <a href="@com.FileUrl" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                    </a>
+                                </span>
+                            </span>
+                        }
+                        <br>
+
+                        <span class="text-primary font-semi-bold font-12">
+                            Comment By : @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")<br>
+                        </span>
+                        @if (com.UpdatedBy != null)
+                        {
+                            <span class="text-primary font-semi-bold font-12">
+                                Updated By :
+
+                                @com.UpdatedBy    <span> - </span> @com.UpdateDate.ToString("MM/dd/yy")<br>
+                            </span>
+                        }
+
+                        <br />
+                        @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                        {
+                            <a href="" class="editcom btn btn-sm btn-primary" data-toggle="modal" data-target="#editcomment" data-comid1="@com.Id"
+                               data-userid1="@com.UserId" data-filedesc1="@com.FileDesc" data-ticketid1="@com.TicketId"
+                               data-comment1="@com.Comments">Edit</a>
+                        }
+                        
+                    </div>
+                </div>
+                
+            </div><!-- End Row -->
+    <hr>
+        }
+
+        @*<table class="table">
             <thead>
             <tr>
                 <td>Comments</td>
@@ -201,7 +247,7 @@
 
                 </tr>
             }
-        </table>
+        </table>*@
     </div>
 
     </div>
@@ -210,7 +256,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exampleModalLabel">Edit Comment</h4>
             </div>
             <div class="modal-body">

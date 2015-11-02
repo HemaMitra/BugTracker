@@ -153,8 +153,16 @@ namespace BugTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                // Hema
+
+                UserRoleHelpers roleHelper = new UserRoleHelpers();
+                var role = roleHelper.AddUserToRole(user.Id, "Submitter");
+                // End Hema
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
@@ -165,9 +173,7 @@ namespace BugTracker.Controllers
                      var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                      await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                     UserRoleHelpers roleHelper = new UserRoleHelpers();
-                     var role = roleHelper.AddUserToRole(user.Id, "Submitter");
-
+                     
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

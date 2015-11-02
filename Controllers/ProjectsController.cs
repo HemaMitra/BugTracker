@@ -32,6 +32,10 @@ namespace BugTracker.Controllers
             {
                 return HttpNotFound();
             }
+            // Hema
+            //var users = projects.Users.ToList();
+            //var tickets = projects.Tickets.ToList();
+            //ViewBag.ProjUsers = users;
             return View(projects);
         }
 

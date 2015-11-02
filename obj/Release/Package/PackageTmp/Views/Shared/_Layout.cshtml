@@ -298,9 +298,8 @@
                         </li>
                         
 
-                        @if (Request.IsAuthenticated)
-                        {
-                            
+                        @if (User.IsInRole("Developer") || User.IsInRole("ProjectManager") || User.IsInRole("Admin"))
+                        {   
                         <li class="openable bg-palette2">
                             <a href="#">
                                 <span class="menu-content block">
@@ -385,6 +384,27 @@
                         </li>
                         
                         }
+                        
+                        @if (User.IsInRole("Submitter"))
+                        {
+                            <li class="openable bg-palette4">
+                                <a href="#">
+                                    <span class="menu-content block">
+                                        <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
+                                        <span class="text m-left-sm">Tickets</span>
+                                        <span class="submenu-icon"></span>
+                                    </span>
+                                    <span class="menu-content-hover block">
+                                        Tickets
+                                    </span>
+                                </a>
+                                <ul class="submenu bg-palette5">
+                                    <li><a href="@Url.Action("Index","Tickets")"><span class="submenu-label">All Tickets</span></a></li>
+                                    <li><a href="@Url.Action("Create","Tickets")"><span class="submenu-label">Create Ticket</span></a></li>
+                                </ul>
+                            </li>
+                        }
+
                         <li class="menu-header">
                             Others
                         </li>
@@ -392,27 +412,13 @@
                         
                     </ul>
                 </div>
-                @*<div class="sidebar-fix-bottom clearfix">
-                    <div class="user-dropdown dropup pull-left">
-                        
-                    </div>
-                    @*<a href="lockscreen.html" class="pull-right font-18"><i class="ion-log-out"></i></a>
-                </div>*@
+               
             </div><!-- sidebar-inner -->
         </aside>
 
         <div class="main-container">
             <div class="padding-md">
-                @*<div class="row">
-                    <div class="col-sm-6">
-                        <div class="page-title">
-                            Dashboard
-                        </div>
-                    </div>
-                </div>*@
-                
                     @RenderBody()
-                
             </div><!-- ./padding-md -->
         </div><!-- /main-container -->
         <footer class="footer">

@@ -72,14 +72,11 @@ namespace BugTracker.Controllers
         {
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
-            //ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName");
-           
             // Show only those projects on which the submitter is assigned to
             var user = db.Users.Find(User.Identity.GetUserId());
             var proj = user.Projects.ToList();
             var proj1 = proj.Where(l => l.ProjectArchieved == false);
 
-            //var proj = db.Projects.Where(l=>l.ProjectArchieved == false);
             ViewBag.ProjectId = new SelectList(proj1 , "Id", "ProjectName");
 
             if (User.IsInRole("Submitter"))
@@ -88,7 +85,6 @@ namespace BugTracker.Controllers
                 var subProj1 = subProj.Where(l => l.ProjectArchieved == false);
                 ViewBag.ProjectId = new SelectList(subProj1, "Id", "ProjectName");
             }
-            //ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName");
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName");
             //Hema
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriority, "Id", "PriorityName");
@@ -146,7 +142,6 @@ namespace BugTracker.Controllers
                 }
             }
 
-            //ViewBag.AssignedToUserId = new SelectList(projUsers, "Id", "FirstName", tickets.AssignedToUserId);
             ViewBag.AssignedToUserId = new SelectList(resultList, "Id", "FirstName", tickets.AssignedToUserId);
             ViewBag.TicketStatusId = new SelectList(db.TicketStatus, "Id", "StatusName", tickets.TicketStatusId);
             ViewBag.TicketTypeId = new SelectList(db.TicketType, "Id", "TicketName", tickets.TicketTypeId);
@@ -270,6 +265,15 @@ namespace BugTracker.Controllers
             }
             return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
         }
+
+        // Called from Details Page for Users
+        public ActionResult ProjectTickets(int projectId)
+        {
+            Projects project = db.Projects.Find(projectId);
+            var tickets = project.Tickets.ToList();
+            return View(tickets);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

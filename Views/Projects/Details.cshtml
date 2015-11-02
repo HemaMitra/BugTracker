@@ -1,26 +1,46 @@
 ﻿@model BugTracker.Models.Projects
+@using BugTracker.Controllers.Helpers           
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <h4>Projects</h4>
+    <h4>Project Details</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ProjectName)
-        </dt>
+        <dt>Project Name :</dt>
+        <dd>@Html.DisplayFor(model => model.ProjectName)<br /><br /></dd>
+        
 
+        <dt>Project Developers :</dt>
         <dd>
-            @Html.DisplayFor(model => model.ProjectName)
+            <ol start="1">
+                @foreach (var user in Model.Users)
+                {
+                     <li>@user.FirstName
+                </li>
+                }
+            </ol>
+        </dd>
+
+        <dt>Tickets :</dt>
+        <dd>
+                @Model.Tickets.Count
+            @if (Model.Tickets.Count > 0)
+            { 
+                <span class="margin-lg">
+            <a href="@Url.Action("ProjectTickets", "Tickets", new { projectId = Model.Id })" 
+               class="text-primary font-semi-bold">View Details
+            </a>
+                </span>
+            }
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "AuthorizedIndex","Home")
 </p>
