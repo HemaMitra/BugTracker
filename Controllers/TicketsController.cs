@@ -17,7 +17,7 @@ namespace BugTracker.Controllers
     public class TicketsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private HistoryHelper histHelper = new HistoryHelper();
         
         // GET: Tickets
         public ActionResult Index()
@@ -103,7 +103,7 @@ namespace BugTracker.Controllers
             {
                 tickets.Created = System.DateTimeOffset.Now;
                 tickets.Updated = null;
-                tickets.TicketStatusId = 4;
+                tickets.TicketStatusId = 4;//Unassigned
                 db.Tickets.Add(tickets);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -156,16 +156,31 @@ namespace BugTracker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,ProjectId,TicketTypeId,TicketPriorityId,TicketStatusId,OwnerUserId,AssignedToUserId")] Tickets tickets)
         {
+            // Get old values for TicketHistory table
+            var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == tickets.Id);
+            string userId = User.Identity.GetUserId();
+            string userName = User.Identity.GetUserName();
+            
+            histHelper.CreateHistory(oldTicket,tickets,userId,userName);
+
             if (ModelState.IsValid)
             {
+               
                 tickets.Updated = System.DateTimeOffset.Now;
+
+                if (tickets.AssignedToUserId != null && tickets.TicketStatusId == 4)
+                {
+                    tickets.TicketStatusId = 3;// Assigned 
+                }
 
                 db.Tickets.Attach(tickets);
                 db.Entry(tickets).Property("Updated").IsModified = true;
                 db.Entry(tickets).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
+
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", tickets.ProjectId);
@@ -235,7 +250,17 @@ namespace BugTracker.Controllers
                 tc.CommentsCreated = System.DateTimeOffset.Now;
                 tc.FilePath = null;
                 db.TicketComments.Add(tc);
-                db.SaveChanges();   
+                db.SaveChanges();
+
+
+                // Notification
+                var ticket = db.Tickets.Find(tc.TicketId);
+                var userId = User.Identity.GetUserId();
+                string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
+                string notiMessage = "Hello " + notiReci + ". A new comment has been created for the following ticket <U>" + ticket.Id +
+                    "</U>";
+                histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
+           
             }
             if (backUrl.Equals("Edit"))
             {
@@ -262,6 +287,15 @@ namespace BugTracker.Controllers
                 db.Entry(Comment).Property("UpdatedBy").IsModified = true;
                 db.Entry(Comment).Property("FileDesc").IsModified = true;
                 db.SaveChanges();
+
+                // Notification
+                var ticket = db.Tickets.Find(tc.TicketId);
+                var userId = User.Identity.GetUserId();
+                string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
+                string notiMessage = "Hello " + notiReci + ". A comment has been changed for the following ticket <U>" + ticket.Id +
+                    "</U>";
+                histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
+
             }
             return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
         }

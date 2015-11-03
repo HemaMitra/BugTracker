@@ -1815,7 +1815,8 @@ a.list-group-item.active:focus {
   width: 45px;
   height: 45px;
   line-height: 45px;
-  background-color: #1c2b36;
+  /*background-color: #1c2b36;*/
+  background-color: #3278b3;
   color: #fff;
   text-align: center;
   z-index: 10;
@@ -1833,7 +1834,8 @@ a.list-group-item.active:focus {
 }
 .scroll-to-top:hover,
 .scroll-to-top:focus {
-  background-color: #2baab1;
+  /*background-color: #2baab1;*/
+  background-color: #3278B3;
   color: #fff;
   transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;

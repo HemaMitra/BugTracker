@@ -37,7 +37,8 @@
                     @Html.DisplayFor(modelItem => item.Project.ProjectName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TicketStatus.StatusName)
+                       @Html.DisplayFor(modelItem => item.TicketStatus.StatusName)
+                   
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.TicketType.TicketName)
@@ -50,7 +51,30 @@
                     @item.Created.ToString("MM/dd/yy")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
+                    @if (item.TicketPriority.PriorityName == "Critical")
+                    {
+                        <span class="label label-danger">
+                            @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
+                        </span>
+                    }
+                    @if (item.TicketPriority.PriorityName == "High")
+                    {
+                        <span class="label label-purple">
+                            @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
+                        </span>
+                    }
+                    @if (item.TicketPriority.PriorityName == "Medium")
+                    {
+                        <span class="label label-success">
+                            @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
+                        </span>
+                    }
+                    @if (item.TicketPriority.PriorityName == "Low")
+                    {
+                        <span class="label label-warning">
+                            @Html.DisplayFor(modelItem => item.TicketPriority.PriorityName)
+                        </span>
+                    }
                 </td>
                 @if (@item.AssignedToUserId == User.Identity.GetUserId() || User.IsInRole("ProjectManager") || User.IsInRole("Admin"))
                 {
