@@ -1,0 +1,107 @@
+﻿@model IEnumerable<BugTracker.Models.ProgressViewModel>
+@{
+    ViewBag.Title = "TicketProgress";
+}
+
+<h2>Project Ticket Status</h2>
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>Project</th>
+            <th>Total</th>
+            <th>Closed</th>
+            <th>Unassigned</th>
+            <th>On Hold</th>
+            <th>In Progress</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var item in Model)
+        { 
+            <tr>
+                <td>
+                    @item.projectName
+                </td>
+                <td>
+                    @item.totalTickets
+                </td>
+                <td>
+                    @item.closedTickets
+                </td>
+                <td>
+                    @item.unassignedTickets
+                </td>
+                <td>
+                    @item.holdTickets
+                </td>
+                <td>
+                    @item.inProgress
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>*@
+
+
+
+<div class="row">
+
+    @foreach(var item in Model)
+    { 
+    <div class="col-md-6">
+        <span class="text-primary font-16 font-semi-bold">@item.projectName</span>
+<div class="task-widget">
+				<div class="task-widget-body clearfix">
+					<div class="pie-chart-wrapper">
+						<div class="chart task-pie-chart line-normal" data-percent="@item.closedPer%">
+							<h1 class="m-top-lg m-bottom-none">@item.closedPer</h1>
+							<div>Closed</div>
+						</div>
+					</div>
+					<div class="widget-detail">
+						<small class="text-upper text-muted block font-sm">Total Tickets</small>
+						<h1 class="no-margin">@item.totalTickets</h1>
+					</div>
+				</div><!-- ./task-widget-body -->
+				<div class="task-widget-statatistic">
+                    <ul class="clearfix">
+                    	
+						<li class="bg-grey border-danger">
+                                <div class="text-muted text-upper font-sm">In Progress</div>
+                                @item.inProgress
+                        </li>
+						<li class="bg-grey border-info">
+                                <div class="text-muted text-upper font-sm">Unassigned</div>
+                                @item.unassignedTickets
+                        </li>
+                        <li class="bg-grey border-purple">
+                            <div class="text-muted text-upper font-sm">Closed</div>
+                            @item.closedTickets
+                        </li>
+					</ul>
+                </div>
+			</div><!-- ./task-widget -->
+        
+        </div>
+    }
+    </div><!-- Row -->
+
+@section scripts
+{
+<script>
+			$(function()	{
+				$('.chart').easyPieChart({
+					easing: 'easeOutBounce',
+					size: '140',
+					lineWidth: '7',
+					barColor: '#7266ba',
+					onStep: function(from, to, percent) {
+						$(this.el).find('.percent').text(Math.round(percent));
+					}
+				});
+			});
+
+</script>
+}

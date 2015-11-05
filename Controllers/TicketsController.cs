@@ -308,6 +308,42 @@ namespace BugTracker.Controllers
             return View(tickets);
         }
 
+        // Notifications Index Page
+        public ActionResult NotiIndex(string userId)
+        {
+            var user = db.Users.Find(userId);
+            var tn = db.TicketNotification.Where(u => u.Recipient == user.Email).OrderBy(t => t.TicketId).ToList();
+            return View(tn);
+        }
+
+        //// Get for ProgressBar
+        public ActionResult TicketProgress()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var proj = user.Projects.ToList();
+            //var userTickets = proj.SelectMany(t => t.Tickets).OrderBy(p => p.ProjectId).ToList();
+            var pvmList = new List<ProgressViewModel>();
+            
+            foreach (var item in proj)
+            {
+                var pvm = new ProgressViewModel();
+                var projTickets = item.Tickets.ToList();
+                pvm.projectName= item.ProjectName;
+
+                pvm.totalTickets = projTickets.Count();
+                pvm.closedTickets = projTickets.Where(c => c.TicketStatus.StatusName == "Close").Count();
+                pvm.unassignedTickets = projTickets.Where(c => c.TicketStatus.StatusName == "Unassigned").Count();
+                pvm.holdTickets = projTickets.Where(c => c.TicketStatus.StatusName == "On Hold").Count();
+                var asgn = projTickets.Where(a => a.TicketStatus.StatusName == "Assigned").Count();
+                var reasgn = projTickets.Where(a => a.TicketStatus.StatusName == "Reassigned").Count();
+                var test = projTickets.Where(a => a.TicketStatus.StatusName == "Testing").Count();
+                var open = projTickets.Where(a => a.TicketStatus.StatusName == "Open").Count();
+                pvm.inProgress = asgn + reasgn + test + open;
+                pvm.closedPer = Convert.ToInt32(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+                pvmList.Add(pvm);
+            }
+            return View(pvmList);    
+        }
 
         protected override void Dispose(bool disposing)
         {

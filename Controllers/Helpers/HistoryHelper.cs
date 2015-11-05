@@ -49,7 +49,8 @@ namespace BugTracker.Controllers.Helpers
                 db.TicketHistory.Add(history1);
 
                 // Notification
-                string notiReci = getAssignedUserEmail(oldTicket.AssignedToUserId);
+                
+                String notiReci = getAssignedUserEmail(newTicket.AssignedToUserId);
                 string notiMessage = "Hello " + notiReci + ". Ticket Status has been changed for the following ticket <U>" + newTicket.Id + 
                     "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
@@ -68,19 +69,29 @@ namespace BugTracker.Controllers.Helpers
                 db.TicketHistory.Add(history2);
 
                 // Notification
-                string notiReci = getAssignedUserEmail(oldTicket.AssignedToUserId);
+                string notiReci = getAssignedUserEmail(newTicket.AssignedToUserId);
                 string notiMessage = "Hello " + notiReci + ". Ticket Priority has been changed for the following ticket <U>" + newTicket.Id + 
                     "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
             }
             if (oldTicket.AssignedToUserId != newTicket.AssignedToUserId)
             {
+                //string empt = "";
+                
                 TicketHistory history3 = new TicketHistory();
                 history3.TicketId = newTicket.Id;
                 history3.UserId = userId;
                 history3.UserName = userName;
                 history3.ChangedDate = System.DateTimeOffset.Now;
-                history3.OldValue = oldTicket.AssignedToUser.FirstName;
+
+                if(oldTicket.AssignedToUserId == null)
+                {
+                    history3.OldValue = "Unassigned";
+                }
+                else
+                {
+                    history3.OldValue = oldTicket.AssignedToUser.FirstName;
+                }
                 history3.NewValue = getAssignedUser(newTicket.AssignedToUserId);
                 history3.Property = "Assigned To";
                 db.TicketHistory.Add(history3);

@@ -22,7 +22,8 @@
                 { 
                     <th>
                         All projects
-                    </th> 
+                    </th>
+                    <th></th> 
                 }
                 else
                 {
@@ -39,6 +40,11 @@
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.ProjectName)
+                    </td>
+
+                     
+                    <td>
+                        <a href="@Url.Action("Details", "Projects", new { id = item.Id })">View Details</a>
                     </td>
                 </tr>
                 }

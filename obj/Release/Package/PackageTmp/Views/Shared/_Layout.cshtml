@@ -1,4 +1,5 @@
-﻿    <!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity    
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -27,203 +28,6 @@
 
 <body class="overflow-hidden">
     <div class="wrapper preload">
-        <div class="sidebar-right">
-            <div class="sidebar-inner scrollable-sidebar">
-                <div class="sidebar-header clearfix">
-                    <input class="form-control dark-input" placeholder="Search" type="text">
-                    <div class="btn-group pull-right">
-                        <a href="#" class="sidebar-setting" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
-                        <ul class="dropdown-menu pull-right flipInV">
-                            <li><a href="#"><i class="fa fa-circle text-danger"></i><span class="m-left-xs">Busy</span></a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i><span class="m-left-xs">Turn Off Chat</span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="title-block">
-                    Group Chat
-                </div>
-                <div class="content-block">
-                    <ul class="sidebar-list">
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-circle-o text-success"></i><span class="m-left-xs">Close Friends</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-circle-o text-success"></i><span class="m-left-xs">Business</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="title-block">
-                    Favorites
-                </div>
-                <div class="content-block">
-                    <ul class="sidebar-list">
-                        <li>
-                            <a href="#" class="clearfix">
-                                
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Where are you?
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-success"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <span class="badge badge-purple bounceIn animation-delay2">2</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                               
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        Jane Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Hello
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-success"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <span class="badge badge-info bounceIn animation-delay2">1</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                                
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        See you again next week.
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-danger"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <i class="fa fa-check text-success"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                                
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Hello, Are you there?
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-danger"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <i class="fa fa-reply"></i>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="title-block">
-                    More friends
-                </div>
-                <div class="content-block">
-                    <ul class="sidebar-list">
-                        <li>
-                            <a href="#" class="clearfix">
-                               
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Where are you?
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-success"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <span class="badge badge-success bounceIn animation-delay2">2</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                                
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        Jane Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Hello
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-success"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <span class="badge badge-danger bounceIn animation-delay2">1</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                               
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        See you again next week.
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-danger"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <i class="fa fa-check text-success"></i>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="clearfix">
-                                
-                                <div class="chat-detail m-left-sm">
-                                    <div class="chat-name">
-                                        John Doe
-                                    </div>
-                                    <div class="chat-message">
-                                        Hello, Are you there?
-                                    </div>
-                                </div>
-                                <div class="chat-status">
-                                    <i class="fa fa-circle-o text-danger"></i>
-                                </div>
-                                <div class="chat-alert">
-                                    <i class="fa fa-reply"></i>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div><!-- sidebar-inner -->
-        </div><!-- sidebar-right -->
         <header class="top-nav">
             <div class="top-nav-inner">
                 <div class="nav-header">
@@ -304,7 +108,7 @@
                             <a href="#">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-list fa-lg"></i></span>
-                                    <span class="text m-left-sm">Projects</span>
+                                    <span class="text m-left-sm text-white">Projects</span>
                                     <span class="submenu-icon"></span>
                                 </span>
                                 <span class="menu-content-hover block">
@@ -312,25 +116,29 @@
                                 </span>
                             </a>
                             <ul class="submenu bg-palette3">
-                                <li><a href="@Url.Action("AuthorizedIndex","Home")"><span class="submenu-label">Assigned Projects</span></a></li>
+                                <li><a href="@Url.Action("AuthorizedIndex","Home")">
+                                    <span class="submenu-label text-white">Assigned Projects</span></a></li>
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <li><a href="@Url.Action("Index","Projects")"><span class="submenu-label">All Projects
+                                <li><a href="@Url.Action("Index","Projects")">
+                                    <span class="submenu-label text-white">All Projects
                                     </span></a></li>
-                                <li><a href="@Url.Action("Create", "Projects")"><span class="submenu-label">Create Project</span></a></li>
-                                <li><a href="@Url.Action("EditProject","Admin")"><span class="submenu-label">Edit Project
+                                <li><a href="@Url.Action("Create", "Projects")">
+                                    <span class="submenu-label text-white">Create Project</span></a></li>
+                                <li><a href="@Url.Action("EditProject","Admin")">
+                                    <span class="submenu-label text-white">Edit Project
                                     </span></a></li>
                                 <li>
                                     <a href="@Url.Action("ProjectList", "Admin")">
-                                        <span class="submenu-label">
+                                        <span class="submenu-label text-white">
                                             Project Users
                                         </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="@Url.Action("AdminIndex","Admin")">
-                                        <span class="submenu-label">
+                                        <span class="submenu-label text-white">
                                             Assign User Roles
                                         </span>
                                     </a>
@@ -343,7 +151,7 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("ProjectList", "Admin")">
-                                            <span class="submenu-label">
+                                            <span class="submenu-label text-white">
                                                 Project Users
                                             </span>
                                         </a>
@@ -358,7 +166,7 @@
                             <a href="#">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                    <span class="text m-left-sm">Tickets</span>
+                                    <span class="text m-left-sm text-white">Tickets</span>
                                     <span class="submenu-icon"></span>
                                 </span>
                                 <span class="menu-content-hover block">
@@ -367,18 +175,28 @@
                             </a>
                             <ul class="submenu bg-palette5">
                                 
-                                <li><a href="@Url.Action("Index","Tickets")"><span class="submenu-label">All Tickets</span></a></li>
+                                <li><a href="@Url.Action("Index","Tickets")"><span class="submenu-label text-white">All Tickets</span></a></li>
 
-                                <li><a href="@Url.Action("Create","Tickets")"><span class="submenu-label">Create Ticket</span></a></li>
+                                <li><a href="@Url.Action("Create","Tickets")"><span class="submenu-label text-white">Create Ticket</span></a></li>
 
                                 @if (User.IsInRole("Admin"))
                                 {
 
-                                <li><a href="@Url.Action("Index","TicketPriorities")"><span class="submenu-label">Ticket Priorities</span></a></li>
+                                <li><a href="@Url.Action("Index","TicketPriorities")">
+                                    <span class="submenu-label text-white">Ticket Priorities</span></a></li>
                                 
-                                <li><a href="@Url.Action("Index","TicketStatus")"><span class="submenu-label">Ticket Status</span></a></li>
+                                <li><a href="@Url.Action("Index","TicketStatus")">
+                                    <span class="submenu-label text-white">Ticket Status</span></a></li>
                                 
-                                <li><a href="@Url.Action("Index","TicketTypes")"><span class="submenu-label">Ticket Types</span></a></li>
+                                <li><a href="@Url.Action("Index","TicketTypes")">
+                                    <span class="submenu-label text-white">Ticket Types</span></a></li>
+                                }
+                                
+                                @if (User.IsInRole("Developer") || User.IsInRole("ProjectManager"))
+                                {
+                                    <li><a href="@Url.Action("NotiIndex", "Tickets",
+                                            new { userId = User.Identity.GetUserId()})">
+                                    <span class="submenu-label text-white">Notifications</span></a></li>
                                 }
                             </ul>
                         </li>
@@ -391,7 +209,7 @@
                                 <a href="#">
                                     <span class="menu-content block">
                                         <span class="menu-icon"><i class="block fa fa-tags fa-lg"></i></span>
-                                        <span class="text m-left-sm">Tickets</span>
+                                        <span class="text m-left-sm text-white">Tickets</span>
                                         <span class="submenu-icon"></span>
                                     </span>
                                     <span class="menu-content-hover block">
@@ -399,8 +217,10 @@
                                     </span>
                                 </a>
                                 <ul class="submenu bg-palette5">
-                                    <li><a href="@Url.Action("Index","Tickets")"><span class="submenu-label">All Tickets</span></a></li>
-                                    <li><a href="@Url.Action("Create","Tickets")"><span class="submenu-label">Create Ticket</span></a></li>
+                                    <li><a href="@Url.Action("Index","Tickets")">
+                                        <span class="submenu-label text-white">All Tickets</span></a></li>
+                                    <li><a href="@Url.Action("Create","Tickets")">
+                                        <span class="submenu-label text-white">Create Ticket</span></a></li>
                                 </ul>
                             </li>
                         }

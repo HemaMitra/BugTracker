@@ -198,28 +198,5 @@ namespace BugTracker.Controllers
             return RedirectToAction("EditProject");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

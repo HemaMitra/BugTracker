@@ -8,7 +8,6 @@
 
 
 <div class="padding-bt">
-    <br>
     <h2>Ticket Details</h2>    
     <hr />
     <div class="col-sm-offset-10">
@@ -149,68 +148,320 @@
             }
         </div>
         </div>
+    @************************************* Tabs Start ********************************************@
+
+    <div class="smart-widget widget-dark col-md-11">
+        @*<div class="smart-widget-header">
+            Left Tab
+            <span class="smart-widget-option">
+                <span class="refresh-icon-animated">
+                    <i class="fa fa-circle-o-notch fa-spin"></i>
+                </span>
+                <a href="#" class="widget-toggle-hidden-option">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <a href="#" class="widget-collapse-option" data-toggle="collapse">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+                <a href="#" class="widget-refresh-option">
+                    <i class="fa fa-refresh"></i>
+                </a>
+                <a href="#" class="widget-remove-option">
+                    <i class="fa fa-times"></i>
+                </a>
+            </span>
+        </div>*@
+        <div class="smart-widget-inner">
+            <div class="smart-widget-hidden-section">
+                <ul class="widget-color-list clearfix">
+                    <li style="background-color:#20232b;" data-color="widget-dark"></li>
+                    <li style="background-color:#4c5f70;" data-color="widget-dark-blue"></li>
+                    <li style="background-color:#23b7e5;" data-color="widget-blue"></li>
+                    <li style="background-color:#2baab1;" data-color="widget-green"></li>
+                    <li style="background-color:#edbc6c;" data-color="widget-yellow"></li>
+                    <li style="background-color:#fbc852;" data-color="widget-orange"></li>
+                    <li style="background-color:#e36159;" data-color="widget-red"></li>
+                    <li style="background-color:#7266ba;" data-color="widget-purple"></li>
+                    <li style="background-color:#f5f5f5;" data-color="widget-light-grey"></li>
+                    <li style="background-color:#fff;" data-color="reset"></li>
+                    
+                </ul>
+            </div>
+            <div class="widget-tab clearfix">
+                <ul class="tab-bar">
+                    <li class="active label-primary"><a href="#style3Tab1" data-toggle="tab"><i class="fa fa-comment"></i> Comments (@Model.TicketComments.Count)</a></li>
+                    <li class="label-primary"><a href="#style3Tab2" data-toggle="tab"><i class="fa fa-history"></i> History (@Model.TicketHistory.Count)</a></li>
+                    <li class="label-primary">
+                        <a href="#style3Tab3" data-toggle="tab"><i class="fa fa-envelope"></i> Notifications (@Model.TicketNotification.Count)</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="smart-widget-body">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="style3Tab1">
+                        <p class="m-top-sm">
+                            @if (@Model.TicketComments.Count <= 0)
+                            {
+                                <h3>No Comments Found</h3>
+                            }
+
+                            @foreach (var com in @Model.TicketComments)
+                            {
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <div class="statistic-box1 bg-light">
+                                            @com.Comments<br>
+                                            @if (com.FileUrl != null)
+                                            {
+                                                <span>
+                                                    File Description : @com.FileDesc
+                                                    <span class="pull-right">
+                                                        <a href="@com.FileUrl" target="_blank">
+                                                            <i class="fa fa-file"></i>
+                                                        </a>
+                                                    </span>
+                                                </span>
+                                            }
+                                            <br>
+
+                                            <span class="text-primary font-semi-bold font-12">
+                                                Comment By : @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")<br>
+                                            </span>
+                                            @if (com.UpdatedBy != null)
+                                            {
+                                                <span class="text-primary font-semi-bold font-12">
+                                                    Updated By :
+
+                                                    @com.UpdatedBy    <span> - </span> @com.UpdateDate.ToString("MM/dd/yy")<br>
+                                                </span>
+                                            }
+
+                                            <br />
+                                            @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                                            {
+                                                <a href="" class="editcom btn btn-sm btn-primary" data-toggle="modal" data-target="#editcomment" data-comid1="@com.Id"
+                                                   data-userid1="@com.UserId" data-filedesc1="@com.FileDesc" data-ticketid1="@com.TicketId"
+                                                   data-comment1="@com.Comments">Edit</a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </div><!-- End Row -->
+                                <hr>
+                            }
+
+
+
+                        </p>
+                    </div><!-- ./tab-pane -->
+                    <div class="tab-pane fade" id="style3Tab2">
+                        <div class="block h4"><strong>Ticket History</strong></div>
+                        <p class="m-top-sm">
+                            <div class="statistic-box1 bg-light">
+                                @if (@Model.TicketHistory.Count <= 0)
+                                {
+                                    <h3>No History For This Ticket Found</h3>
+                                }
+
+                                <table class="table">
+                                    
+                                        @if (@Model.TicketHistory.Count > 0)
+                                        {
+                                            <thead>
+                                                <tr>
+                                                    <td>Ticket Id</td>
+                                                    <td>Property</td>
+                                                    <td>Old Value</td>
+                                                    <td>New Value</td>
+                                                    <td>User</td>
+                                                    <td>Change Date</td>
+                                                </tr>
+                                            </thead>
+                                        }
+                                        
+                                    @foreach (var com in @Model.TicketHistory)
+                                    {
+                                        <tr>
+                                            <td>@com.TicketId</td>
+                                            <td>
+                                                @com.Property
+                                            </td>
+                                            <td>@com.OldValue</td>
+                                            <td>@com.NewValue</td>
+                                            <td>@com.UserName</td>
+                                            <td>
+                                                @com.ChangedDate.ToString("MM/dd/yy")
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                                </div>
+
+
+</p>
+                    </div><!-- ./tab-pane -->
+                    <div class="tab-pane fade" id="style3Tab3">
+                        <div class="block h4"><strong>Notifications Tab</strong></div>
+                        <p class="m-top-sm">
+                            <div class="statistic-box1 bg-light">
+                                @if (@Model.TicketNotification.Count <= 0)
+                                {
+                                    <h3>No Notifications Found</h3>
+                                }
+
+                                <table class="table">
+
+                                    @if (@Model.TicketNotification.Count > 0)
+                                    {
+                                        <thead>
+                                            <tr>
+                                                <td>Recipient</td>
+                                                <td>Message</td>
+                                                <td>Date</td>
+                                            </tr>
+                                        </thead>
+                                    }
+
+                                    @foreach (var com in @Model.TicketNotification)
+                                    {
+                                        <tr>
+                                            <td>@com.Recipient</td>
+                                            <td>@Html.Raw(@com.Message)</td>
+                                            <td>@com.SentDate.ToString("MM/dd/yy")</td>
+                                        </tr>
+                                    }
+                                </table>
+                            </div>
+
+
+
+
+
+
+
+                        </p>
+                    </div><!-- ./tab-pane -->
+                </div><!-- ./tab-content -->
+            </div>
+        </div>
+    </div><!-- ./smart-widget -->
+    
+    @************************************* Tabs End **************************************@
+
+
+
+
     @************************ Comments Start *************************@
     <hr />
+
+
+
+
+
+
     
-    <div class=" col-sm-offset-1">
+    @*<div class=" col-sm-offset-1">
         @if (@Model.TicketComments.Count > 0)
-        { 
+        {
             <H3>Comments</H3>
         }
-        <table class="table">
-            <thead>
-            <tr>
-                <td>Comments</td>
-                <td>File</td>
-                <td>File Description</td>
-                <td>Update Info</td>
-                <td>Created By</td>
-            </tr>
-            </thead>
-            @foreach (var com in @Model.TicketComments)
-            {
-                <tr>
-                    <td>@com.Comments</td>
-                    <td>
+        @foreach (var com in @Model.TicketComments)
+        {
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="statistic-box1 bg-light">
+                        @com.Comments<br>
                         @if (com.FileUrl != null)
                         {
-                            <a href="@com.FileUrl" target="_blank">
-                                <i class="fa fa-file"></i>
-                            </a>
+                            <span>
+                                File Description : @com.FileDesc
+                                <span class="pull-right">
+                                    <a href="@com.FileUrl" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                    </a>
+                                </span>
+                            </span>
                         }
-                    </td>
-                    <td>@com.FileDesc</td>
-                    <td>@if(com.UpdatedBy != null)
-                        { 
-                            @com.UpdatedBy <span>-</span> @com.UpdateDate.ToString("MM/dd/yy")
-                            
-                        }
-                    </td>
-                    <td>
-                        @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")
-                        @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin"))
+                        <br>
+
+                        <span class="text-primary font-semi-bold font-12">
+                            Comment By : @com.User.FirstName - @com.CommentsCreated.ToString("MM/dd/yy")<br>
+                        </span>
+                        @if (com.UpdatedBy != null)
                         {
-                            
-                            <a href="" class="editcom" data-toggle="modal" data-target="#editcomment" data-comid1="@com.Id"
+                            <span class="text-primary font-semi-bold font-12">
+                                Updated By :
+
+                                @com.UpdatedBy    <span> - </span> @com.UpdateDate.ToString("MM/dd/yy")<br>
+                            </span>
+                        }
+
+                        <br />
+                        @if (User.Identity.GetUserId() == com.UserId || User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                        {
+                            <a href="" class="editcom btn btn-sm btn-primary" data-toggle="modal" data-target="#editcomment" data-comid1="@com.Id"
                                data-userid1="@com.UserId" data-filedesc1="@com.FileDesc" data-ticketid1="@com.TicketId"
                                data-comment1="@com.Comments">Edit</a>
-                            
                         }
-                    </td>
-                    
 
+                    </div>
+                </div>
+
+            </div><!-- End Row -->
+    <hr>
+        }
+        @if(@Model.TicketHistory.Count > 0)
+        {
+            <H3>Ticket History</H3>
+        }
+
+         <table class="table">
+            <thead>
+        @if (@Model.TicketHistory.Count > 0)
+        {
+                    <tr>
+                <td>Ticket Id</td>
+                <td>Property</td>
+                <td>Old Value</td>
+                <td>New Value</td>
+                <td>User</td>
+                <td>Change Date</td>
+            </tr>
+        }
+            </thead>
+            @foreach (var com in @Model.TicketHistory)
+            {
+                <tr>
+                    <td>@com.TicketId</td>
+                    <td>
+                        @com.Property
+                    </td>
+                    <td>@com.OldValue</td>
+                    <td>@com.NewValue</td>
+                    <td>
+                        @if(@com.UserId == "4f1eae5c-0f19-4226-87a6-b67234224bab")
+                         {
+                            <span>Moderator@Coderfoundry.com</span>
+                        }
+
+                    </td>
+                    <td>
+                    @com.ChangedDate.ToString("MM/dd/yy")
+                    </td>
                 </tr>
             }
         </table>
     </div>
-
+        *@
     </div>
 
 <div class="modal fade" id="editcomment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="exampleModalLabel">Edit Comment</h4>
             </div>
             <div class="modal-body">
@@ -233,7 +484,7 @@
         </div>
     </div>
 </div>
-
+<a href="#" class="scroll-to-top hidden-print"><i class="fa fa-chevron-up fa-lg"></i></a>
 
 
 @section Scripts{
