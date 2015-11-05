@@ -255,12 +255,14 @@ namespace BugTracker.Controllers
 
                 // Notification
                 var ticket = db.Tickets.Find(tc.TicketId);
-                var userId = User.Identity.GetUserId();
-                string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
-                string notiMessage = "Hello " + notiReci + ". A new comment has been created for the following ticket <U>" + ticket.Id +
-                    "</U>";
-                histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
-           
+
+                if(ticket.TicketStatus.StatusName != "Unassigned")
+                { 
+                    var userId = User.Identity.GetUserId();
+                    string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
+                    string notiMessage = "Hello " + notiReci + ". A new comment has been created for the following ticket <U>" + ticket.Id + "</U>";
+                    histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
+                }
             }
             if (backUrl.Equals("Edit"))
             {
@@ -290,12 +292,15 @@ namespace BugTracker.Controllers
 
                 // Notification
                 var ticket = db.Tickets.Find(tc.TicketId);
-                var userId = User.Identity.GetUserId();
-                string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
-                string notiMessage = "Hello " + notiReci + ". A comment has been changed for the following ticket <U>" + ticket.Id +
-                    "</U>";
-                histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
 
+                if (ticket.TicketStatus.StatusName != "Unassigned")
+                {
+                    var userId = User.Identity.GetUserId();
+                    string notiReci = histHelper.getAssignedUserEmail(ticket.AssignedToUserId);
+                    string notiMessage = "Hello " + notiReci + ". A comment has been changed for the following ticket <U>" + ticket.Id +
+                        "</U>";
+                    histHelper.InitializeNoti(ticket.Id, userId, notiReci, notiMessage);
+                }
             }
             return RedirectToAction("Details", "Tickets", new { id = tc.TicketId });
         }
@@ -320,7 +325,13 @@ namespace BugTracker.Controllers
         public ActionResult TicketProgress()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-            var proj = user.Projects.ToList();
+            var proj = user.Projects.Where(p => p.ProjectArchieved == false).ToList();
+
+            if (User.IsInRole("Admin"))
+            {
+                proj = db.Projects.Where(p => p.ProjectArchieved == false).ToList();
+            }
+
             //var userTickets = proj.SelectMany(t => t.Tickets).OrderBy(p => p.ProjectId).ToList();
             var pvmList = new List<ProgressViewModel>();
             
@@ -339,7 +350,15 @@ namespace BugTracker.Controllers
                 var test = projTickets.Where(a => a.TicketStatus.StatusName == "Testing").Count();
                 var open = projTickets.Where(a => a.TicketStatus.StatusName == "Open").Count();
                 pvm.inProgress = asgn + reasgn + test + open;
-                pvm.closedPer = Convert.ToInt32(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+
+                if (pvm.totalTickets > 0)
+                {
+                    pvm.closedPer = Convert.ToInt32(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+                }
+                else
+                {
+                    pvm.closedPer = 0;
+                }
                 pvmList.Add(pvm);
             }
             return View(pvmList);    

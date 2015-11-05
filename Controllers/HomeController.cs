@@ -28,10 +28,11 @@ namespace BugTracker.Controllers
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
 
-                return View(user.Projects.ToList());
+                return View(user.Projects.Where(p => p.ProjectArchieved == false).ToList());
             }
 
-            return View(db.Projects.ToList());
+            //return View(db.Projects.ToList());
+            return View(db.Projects.Where(p => p.ProjectArchieved == false).ToList());
         }
 
         public ActionResult About()

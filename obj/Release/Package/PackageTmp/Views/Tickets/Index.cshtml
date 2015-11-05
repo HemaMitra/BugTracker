@@ -7,7 +7,7 @@
 <h2>All Tickets</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create") / @Html.ActionLink("View Graph", "TicketProgress")
 </p>
 <table id="ticketIndex" class="display">
     <thead>
@@ -40,9 +40,6 @@
                        @Html.DisplayFor(modelItem => item.TicketStatus.StatusName)
                    
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.TicketType.TicketName)
-                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>

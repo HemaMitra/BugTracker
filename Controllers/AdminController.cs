@@ -29,7 +29,7 @@ namespace BugTracker.Controllers
             if(User.IsInRole("ProjectManager"))
             { 
                 var user = db.Users.Find(User.Identity.GetUserId());
-                var proj = user.Projects.ToList();
+                var proj = user.Projects.Where(p => p.ProjectArchieved == false).ToList();
                 return View(proj.ToList());
             }
             return View(db.Projects.ToList());
