@@ -350,7 +350,9 @@ namespace BugTracker.Controllers
 
                 if (pvm.totalTickets > 0)
                 {
-                    pvm.closedPer = Convert.ToInt32(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+                    //pvm.closedPer = Convert.ToInt32(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+                    pvm.closedPer = Convert.ToDouble(((double)pvm.closedTickets / (double)pvm.totalTickets) * 100);
+                    pvm.closedPer = Math.Round(pvm.closedPer, 2);
                 }
                 else
                 {
