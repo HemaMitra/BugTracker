@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System.IO;
 using BugTracker.Controllers.Helpers;
+using Microsoft.AspNet.SignalR.Infrastructure;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace BugTracker.Controllers
 {
@@ -162,6 +164,19 @@ namespace BugTracker.Controllers
             string userName = User.Identity.GetUserName();
             
             histHelper.CreateHistory(oldTicket,tickets,userId,userName);
+
+            // ForSignalR 
+
+
+            
+            
+
+            SignalRNotiHub sr = new SignalRNotiHub();
+            sr.SendNotifications(tickets.AssignedToUserId,"Check Assigned Ticket Id : " + tickets.Id + ".");
+            //sr.SendNotifications(histHelper.getAssignedUserEmail(tickets.AssignedToUserId), "Ticket " + tickets.Id + "Updated");
+
+
+
 
             if (ModelState.IsValid)
             {

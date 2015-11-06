@@ -31,7 +31,7 @@ namespace BugTracker.Controllers.Helpers
                 db.TicketHistory.Add(history);
 
                 // Notification
-                string notiReci = getAssignedUserEmail(oldTicket.AssignedToUserId);
+                string notiReci = getAssignedUserEmail(newTicket.AssignedToUserId);
                 string notiMessage = "Hello " + notiReci + ". Ticket Type has been changed for the following ticket <U>" + newTicket.Id + "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
 
