@@ -30,12 +30,6 @@ namespace BugTracker.Controllers
                 var proj = user.Projects.ToList();
                 var userTickets = proj.SelectMany(p => p.Tickets).AsQueryable();
 
-                //if (User.IsInRole("Submitter"))
-                //{
-                //    userTickets = userTickets.Where(t => t.OwnerUserId == User.Identity.GetUserId());
-                //}
-
-
                 return View(userTickets.ToList());
             }
 
@@ -46,8 +40,6 @@ namespace BugTracker.Controllers
                 userTickets1 = userTickets1.Where(t => t.OwnerUserId == User.Identity.GetUserId());
                 return View(userTickets1.ToList());
             }
-
-
 
             var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
 
@@ -167,20 +159,12 @@ namespace BugTracker.Controllers
 
             // ForSignalR 
 
-
-            
-            
-
             SignalRNotiHub sr = new SignalRNotiHub();
-            sr.SendNotifications(tickets.AssignedToUserId,"Check Assigned Ticket Id : " + tickets.Id + ".");
-            //sr.SendNotifications(histHelper.getAssignedUserEmail(tickets.AssignedToUserId), "Ticket " + tickets.Id + "Updated");
-
-
-
-
+            var user = db.Users.Find(tickets.AssignedToUserId);
+            sr.SendNotifications(user.UserName,"Check Assigned Ticket Id : " + tickets.Id + ".");
+           
             if (ModelState.IsValid)
             {
-               
                 tickets.Updated = System.DateTimeOffset.Now;
 
                 if (tickets.AssignedToUserId != null && tickets.TicketStatusId == 4)
@@ -241,7 +225,6 @@ namespace BugTracker.Controllers
                 {
                     ModelState.AddModelError("image", "Invalid Format");
                 }
-
             }
 
             if (ModelState.IsValid)
@@ -336,7 +319,7 @@ namespace BugTracker.Controllers
             return View(tn);
         }
 
-        //// Get for ProgressBar
+        //// Get for Tickets Graph
         public ActionResult TicketProgress()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
@@ -347,7 +330,6 @@ namespace BugTracker.Controllers
                 proj = db.Projects.Where(p => p.ProjectArchieved == false).ToList();
             }
 
-            //var userTickets = proj.SelectMany(t => t.Tickets).OrderBy(p => p.ProjectId).ToList();
             var pvmList = new List<ProgressViewModel>();
             
             foreach (var item in proj)

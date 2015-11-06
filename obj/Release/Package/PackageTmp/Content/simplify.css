@@ -1631,6 +1631,20 @@ a.list-group-item.active:focus {
   -ms-transition: all 0.2s ease;
   -o-transition: all 0.2s ease;
 }
+
+.notificationBalloon {
+    display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  font-size: 14px;
+}
+
+
+
 .dropdown-menu.notification li a .notification-icon {
   display: inline-block;
   width: 20px;

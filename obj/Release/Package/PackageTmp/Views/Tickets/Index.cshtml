@@ -4,11 +4,14 @@
     ViewBag.Title = "Index";
 }
 
+
+
 <h2>All Tickets</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create") / @Html.ActionLink("View Graph", "TicketProgress")
 </p>
+
 <table id="ticketIndex" class="display">
     <thead>
         <tr>
@@ -93,10 +96,12 @@
 
 @section scripts
 {
+<script src="/Scripts/jquery.signalR-2.2.0.js"></script>
+<script src="/SignalR/Hubs"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#ticketIndex').DataTable();
+            
         });
-    
     </script>
 }

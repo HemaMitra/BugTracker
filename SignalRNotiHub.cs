@@ -12,12 +12,9 @@ namespace BugTracker
     {
         public void SendNotifications(string recipient,string message)
         {
+            // Open Pipeline with hub to send message to the recipient
             var hub = GlobalHost.ConnectionManager.GetHubContext<SignalRNotiHub>();
-            //Clients.All.addNewMessageToPage(name, message);
-            hub.Clients.All.receiveSRNoti(message);
-            //hub.Clients.User(recipient).receiveSrNoti(message);
-
-
+            hub.Clients.User(recipient).receiveSrNoti(message);
         }
     }
 }

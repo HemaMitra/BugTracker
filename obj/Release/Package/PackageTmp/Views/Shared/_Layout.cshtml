@@ -1,12 +1,11 @@
-﻿@using Microsoft.AspNet.Identity    
+﻿@using Microsoft.AspNet.Identity
+    
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Bug Tracker</title>
-    @*@Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Content/ionicons.min.css" rel="stylesheet" />
@@ -16,12 +15,7 @@
     <link href="~/Content/owl.theme.default.min.css" rel="stylesheet" />
     <link href="~/Content/simplify.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
-    
     <link href="~/Content/DataTables-1.10.9/media/css/jquery.dataTables.min.css" rel="stylesheet" />
-    
-    @*<link href="~/Content/bootstrap-slider.css" rel="stylesheet" />*@
-    
-    
     <link href="~/Content/multi-select.css" rel="stylesheet" />
 
 </head>
@@ -42,12 +36,10 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
                             <span class="badge badge-danger bounceIn">1</span>
                             <ul class="dropdown-menu dropdown-sm pull-right user-dropdown">
+
                                 <li class="user-avatar">
                                     <div class="user-content">
-                                        @*<h5 class="no-m-bottom">Jane Doe</h5>*@
                                         <div class="m-top-xs">
-                                            @*<a href="profile.html" class="m-right-sm">Profile</a>
-                                            <a href="signin.html">Log out</a>*@
                                             @Html.Partial("_LoginPartial")
                                         </div>
                                     </div>
@@ -247,6 +239,8 @@
 
         <div class="main-container">
             <div class="padding-md">
+                <div id="notiMsg" class="text-danger font-semi-bold bounceIn">
+                </div>
                     @RenderBody()
             </div><!-- ./padding-md -->
         </div><!-- /main-container -->
@@ -260,9 +254,6 @@
         </footer>
     </div><!-- /wrapper -->
     
-    <!-- Delete Widget Confirmation -->
-    
-
     
     <!-- Le javascript
     ================================================== -->
@@ -270,14 +261,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @*<!-- Jquery -->
-    <script src="js/jquery-1.11.1.min.js"></script>
-
-    <!-- Bootstrap -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>*@
-
-    <!-- Flot -->
-    @*<script src='/js/jquery.flot.min.js'></script>*@
+   
     <!-- Slimscroll -->
     <script src='/js/jquery.slimscroll.min.js'></script>
 
@@ -298,20 +282,35 @@
 
     <!-- Simplify -->
     <script src="/js/simplify/simplify.js"></script>
-    @*<script src="/js/simplify/simplify_dashboard.js"></script>*@
-    
     <script src="/Scripts/jquery.multi-select.js"></script>
-
-    @RenderSection("scripts", required: false)
     <script src="/Scripts/DataTables-1.10.9/media/js/jquery.dataTables.min.js"></script>
     <script src="/Scripts/DataTables-1.10.9/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-    
+    <script src="/Scripts/jquery.signalR-2.2.0.js"></script>
+    <script src="/SignalR/Hubs"></script>
 
 
+    <script type="text/javascript">
+        (function () {
+        // Opening connection with SignalR Hub
+            var proxy = $.connection.signalRNotiHub;
+            proxy.client.receiveSRNoti = function (message) {
+                document.getElementById("notiMsg").innerHTML = message;
+                $("#notiMsg").text(message);
+        
+                console.log(message);
+            };
 
-    
+            // Start connection with SignalR Hub
+            $.connection.hub.start().done(function () {
+            });
 
+        })();
+    </script>
+
+    @RenderSection("scripts", required: false)
+   
 </body>
 
 
 </html>
+

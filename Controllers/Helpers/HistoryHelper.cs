@@ -101,20 +101,6 @@ namespace BugTracker.Controllers.Helpers
                 string notiMessage = "Hello " + notiReci + ". You have been assigned the following ticket <U>" + newTicket.Id + "</U>";
                 InitializeNoti(newTicket.Id,userId,notiReci,notiMessage);
 
-                //// Notification
-                //TicketNotification noti = new TicketNotification();
-                //noti.TicketId = newTicket.Id;
-                //noti.UserId = userId;
-                //noti.Recipient = getAssignedUserEmail(newTicket.AssignedToUserId);
-                //noti.Message = "Hello " + noti.Recipient + ". You have been assigned the following ticket <U>" + newTicket.Id + "</U>";
-                //bool result = Notification(noti.Recipient, noti.Message);
-                //if (result == true)
-                //{
-                //    noti.NotiSent = true;
-                //    db.TicketNotification.Add(noti);
-                //    db.SaveChanges();
-                //}
-
             }
             db.SaveChanges();
         }
@@ -175,7 +161,6 @@ namespace BugTracker.Controllers.Helpers
             return true;
         }
 
-
         public bool Notification(string recipient, string message)
         {
             IdentityMessage msg = new IdentityMessage();
@@ -187,8 +172,5 @@ namespace BugTracker.Controllers.Helpers
             ems.SendAsync(msg);
             return true;
         }
-
-        
-
     }
 }

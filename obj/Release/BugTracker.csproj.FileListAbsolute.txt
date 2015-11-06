@@ -59,3 +59,7 @@ C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Pa
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.Mvc.dll
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.xml
 C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\PagedList.Mvc.xml
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\Hema\documents\visual studio 2013\Projects\BugTracker\BugTracker\bin\Microsoft.AspNet.SignalR.SystemWeb.xml

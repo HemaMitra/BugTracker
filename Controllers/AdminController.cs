@@ -15,24 +15,23 @@ namespace BugTracker.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         UserRoleHelpers roleHelpers = new UserRoleHelpers();
 
-        //// Get
-        //[Authorize(Roles = "Admin, ProjectManager")]
-        //public ActionResult ProjectList()
-        //{
-        //    return View(db.Projects.ToList());
-        //}
+        
 
         // Get
         [Authorize(Roles = "Admin, ProjectManager")]
         public ActionResult ProjectList()
         {
+
             if(User.IsInRole("ProjectManager"))
             { 
                 var user = db.Users.Find(User.Identity.GetUserId());
                 var proj = user.Projects.Where(p => p.ProjectArchieved == false).ToList();
                 return View(proj.ToList());
             }
-            return View(db.Projects.ToList());
+
+            // If User is Admin
+            var allActiveProjs = db.Projects.Where(p => p.ProjectArchieved == false).ToList();
+            return View(allActiveProjs);
         }
 
 
@@ -47,17 +46,9 @@ namespace BugTracker.Controllers
             // Calling Helper Method
             var selected = helper.ListOfUsers(projectId).Select(l=>l.Id);
 
+            // Only Developers will be displayed for the Project Manager.
             var userRole = roleHelpers.UsersInRole("Developer");
-            //// Hema
-            //var userRole = roleHelpers.UsersInRole("Developer").ToList();
-            //var user = db.Users.Find(User.Identity.GetUserId());
             
-            //if(User.IsInRole("ProjectManager"))
-            //{ 
-            //        userRole.Add(user);
-            //}
-
-
             if (User.IsInRole("Admin"))
             {
                 projectModel.ApplicationUser = new MultiSelectList(db.Users, "Id", "FirstName", selected);
@@ -197,6 +188,5 @@ namespace BugTracker.Controllers
             TempData["Message"] = "Project Updated.";
             return RedirectToAction("EditProject");
         }
-
     }
 }
