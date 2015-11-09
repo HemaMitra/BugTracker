@@ -113,14 +113,16 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                <li><a href="@Url.Action("Index","Projects")">
+                                @*<li><a href="@Url.Action("Index","Projects")">
                                     <span class="submenu-label text-white">All Projects
-                                    </span></a></li>
+                                    </span></a></li>*@
+                                  <li>
+                                    <a href="@Url.Action("EditProject","Admin")">
+                                    <span class="submenu-label text-white">All Projects</span>
+                                    </a>
+                                  </li>
                                 <li><a href="@Url.Action("Create", "Projects")">
                                     <span class="submenu-label text-white">Create Project</span></a></li>
-                                <li><a href="@Url.Action("EditProject","Admin")">
-                                    <span class="submenu-label text-white">Edit Project
-                                    </span></a></li>
                                 <li>
                                     <a href="@Url.Action("ProjectList", "Admin")">
                                         <span class="submenu-label text-white">
@@ -195,7 +197,7 @@
                                 {
                                     <li>
                                         <a href="@Url.Action("TicketProgress", "Tickets")">
-                                            <span class="submenu-label text-white">View Graph</span>
+                                            <span class="submenu-label text-white">Ticket Graph</span>
                                         </a>
                                     </li>
                                 }

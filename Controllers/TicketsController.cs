@@ -27,22 +27,28 @@ namespace BugTracker.Controllers
             if(User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
             {
                 var user = db.Users.Find(User.Identity.GetUserId());
-                var proj = user.Projects.ToList();
+                //var proj = user.Projects.ToList();
+                var proj = user.Projects.Where(ap => ap.ProjectArchieved == false);
                 var userTickets = proj.SelectMany(p => p.Tickets).AsQueryable();
-
+                
                 return View(userTickets.ToList());
             }
 
             if (User.IsInRole("Submitter"))
             {
-                var proj1 = db.Projects.ToList();
+                //var proj1 = db.Projects.ToList();
+                var proj1 = db.Projects.Where(a => a.ProjectArchieved == false).ToList();
                 var userTickets1 = proj1.SelectMany(p => p.Tickets).AsQueryable();
                 userTickets1 = userTickets1.Where(t => t.OwnerUserId == User.Identity.GetUserId());
                 return View(userTickets1.ToList());
             }
 
-            var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
+            //var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketStatus).Include(t => t.TicketType);
 
+
+            var allProj = db.Projects.Where(p => p.ProjectArchieved == false).ToList();
+            var tickets = allProj.SelectMany(t => t.Tickets); 
+            
             return View(tickets.ToList());
         }
 
@@ -159,9 +165,9 @@ namespace BugTracker.Controllers
 
             // ForSignalR 
 
-            SignalRNotiHub sr = new SignalRNotiHub();
-            var user = db.Users.Find(tickets.AssignedToUserId);
-            sr.SendNotifications(user.UserName,"Check Assigned Ticket Id : " + tickets.Id + ".");
+            //SignalRNotiHub sr = new SignalRNotiHub();
+            //var srUser = db.Users.Find(tickets.AssignedToUserId);
+            //sr.SendNotifications(srUser.UserName,"Check Assigned Ticket Id : " + tickets.Id + ".");
            
             if (ModelState.IsValid)
             {

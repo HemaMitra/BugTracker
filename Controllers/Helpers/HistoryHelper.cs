@@ -13,7 +13,8 @@ namespace BugTracker.Controllers.Helpers
     {
         ApplicationDbContext db = new ApplicationDbContext();
         ApplicationUser au1 = new ApplicationUser();
-        
+        SignalRNotiHub sr = new SignalRNotiHub();
+            
         public void CreateHistory(Tickets oldTicket, Tickets newTicket, string userId, string userName)
         {
             
@@ -35,6 +36,9 @@ namespace BugTracker.Controllers.Helpers
                 string notiMessage = "Hello " + notiReci + ". Ticket Type has been changed for the following ticket <U>" + newTicket.Id + "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
 
+                // SignalR
+                var srUser = db.Users.Find(newTicket.AssignedToUserId);
+                sr.SendNotifications(srUser.UserName, "Ticket Type Changed For Ticket Id : " + newTicket.Id + ".");
             }
             if (oldTicket.TicketStatusId != newTicket.TicketStatusId)
             {
@@ -55,6 +59,10 @@ namespace BugTracker.Controllers.Helpers
                     "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
 
+                // SignalR
+                var srUser = db.Users.Find(newTicket.AssignedToUserId);
+                sr.SendNotifications(srUser.UserName, "Ticket Status Changed For Ticket Id : " + newTicket.Id + ".");
+
             }
             if (oldTicket.TicketPriorityId != newTicket.TicketPriorityId)
             {
@@ -73,6 +81,10 @@ namespace BugTracker.Controllers.Helpers
                 string notiMessage = "Hello " + notiReci + ". Ticket Priority has been changed for the following ticket <U>" + newTicket.Id + 
                     "</U>";
                 InitializeNoti(newTicket.Id, userId, notiReci, notiMessage);
+
+                // SignalR
+                var srUser = db.Users.Find(newTicket.AssignedToUserId);
+                sr.SendNotifications(srUser.UserName, "Ticket Priority Changed For Ticket Id : " + newTicket.Id + ".");
             }
             if (oldTicket.AssignedToUserId != newTicket.AssignedToUserId)
             {
@@ -101,6 +113,9 @@ namespace BugTracker.Controllers.Helpers
                 string notiMessage = "Hello " + notiReci + ". You have been assigned the following ticket <U>" + newTicket.Id + "</U>";
                 InitializeNoti(newTicket.Id,userId,notiReci,notiMessage);
 
+                // SignalR
+                var srUser = db.Users.Find(newTicket.AssignedToUserId);
+                sr.SendNotifications(srUser.UserName, "You Have Been  Assigned A New Ticket : " + newTicket.Id + ".");
             }
             db.SaveChanges();
         }

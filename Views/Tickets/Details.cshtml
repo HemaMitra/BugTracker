@@ -302,7 +302,7 @@
 </p>
                     </div><!-- ./tab-pane -->
                     <div class="tab-pane fade" id="style3Tab3">
-                        <div class="block h4"><strong>Notifications Tab</strong></div>
+                        @*<div class="block h4"><strong>Notifications Tab</strong></div>*@
                         <p class="m-top-sm">
                             <div class="statistic-box1 bg-light">
                                 @if (@Model.TicketNotification.Count <= 0)
@@ -310,28 +310,39 @@
                                     <h3>No Notifications Found</h3>
                                 }
 
+                                @if(User.Identity.GetUserId() == @Model.AssignedToUserId || User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                                {
+
                                 <table class="table">
 
-                                    @if (@Model.TicketNotification.Count > 0)
-                                    {
-                                        <thead>
-                                            <tr>
-                                                <td>Recipient</td>
-                                                <td>Message</td>
-                                                <td>Date</td>
-                                            </tr>
-                                        </thead>
-                                    }
+                                    
+                                        @if (@Model.TicketNotification.Count > 0)
+                                        {
+                                            <thead>
+                                                <tr>
+                                                    <td>Recipient</td>
+                                                    <td>Message</td>
+                                                    <td>Date</td>
+                                                </tr>
+                                            </thead>
+                                        }
 
-                                    @foreach (var com in @Model.TicketNotification)
-                                    {
-                                        <tr>
-                                            <td>@com.Recipient</td>
-                                            <td>@Html.Raw(@com.Message)</td>
-                                            <td>@com.SentDate.ToString("MM/dd/yy")</td>
-                                        </tr>
-                                    }
-                                </table>
+                                        @foreach (var com in @Model.TicketNotification)
+                                        {
+                                            <tr>
+                                                <td>@com.Recipient</td>
+                                                <td>@Html.Raw(@com.Message)</td>
+                                                <td>@com.SentDate.ToString("MM/dd/yy")</td>
+                                            </tr>
+                                        }
+                                    
+                                    
+                                            </table>
+                                }
+                                else
+                                {
+                                    <h3>No Notifications For You.</h3>
+                                }
                             </div>
 
 
