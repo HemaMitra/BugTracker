@@ -193,7 +193,7 @@
                                     <span class="submenu-label text-white">Notifications</span></a></li>
                                 }
                                 
-                                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || User.IsInRole("Developer"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || User.IsInRole("Developer") )
                                 {
                                     <li>
                                         <a href="@Url.Action("TicketProgress", "Tickets")">

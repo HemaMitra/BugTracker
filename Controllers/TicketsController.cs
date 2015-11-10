@@ -79,6 +79,17 @@ namespace BugTracker.Controllers
 
             ViewBag.ProjectId = new SelectList(proj1 , "Id", "ProjectName");
 
+            if (User.IsInRole("Admin"))
+            {
+                var admProj = db.Projects.Where(l => l.ProjectArchieved == false).ToList();
+                ViewBag.ProjectId = new SelectList(admProj, "Id", "ProjectName");
+
+                if (User.Identity.GetUserName() == "guestadmin@coderfoundry.com")
+                {
+                    ViewBag.ProjectId = new SelectList(proj1, "Id", "ProjectName");
+                }
+            } 
+
             if (User.IsInRole("Submitter"))
             {
                 var subProj = db.Projects.ToList();

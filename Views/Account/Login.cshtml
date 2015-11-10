@@ -54,7 +54,30 @@
         //    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         //</section>
     </div>*@
+
+    <div class="col-md-4">
+        <div class="col-sm-12"><H4>Guest Login</H4><HR /></div><br><br>
+        <div class="col-sm-12">
+            <a href="@Url.Action("GuestAdmin", "Account")" 
+               class="btn btn-sm btn-primary">Guest Admin</a><br><br>
+        </div>
+        <div class="col-sm-12">
+            <a href="@Url.Action("GuestPM", "Account")" 
+               class="btn btn-sm btn-primary">Guest Project Manager</a><br><br>
+        </div>
+        <div class="col-sm-12">
+            <a href="@Url.Action("GuestDev", "Account")" 
+               class="btn btn-sm btn-primary">Guest Developer</a><br><br>
+        </div>
+        <div class="col-sm-12">
+            <a href="@Url.Action("GuestSubmitter", "Account")" 
+            class="btn btn-sm btn-primary">Guest Submitter</a>
+        </div>
+    </div>
+    
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

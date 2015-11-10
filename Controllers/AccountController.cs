@@ -18,7 +18,8 @@ namespace BugTracker.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext db = new ApplicationDbContext();
+       
         public AccountController()
         {
         }
@@ -92,6 +93,44 @@ namespace BugTracker.Controllers
                     return View(model);
             }
         }
+
+        // Guest Admin
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestAdmin()
+        {
+            
+            var user = db.Users.Find("8ed1e111-6601-4691-8fc0-bc6598172f16");
+            await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
+            return RedirectToAction("Index", "Tickets");
+        }
+
+        // Guest PM
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestPM()
+        {
+            var user = db.Users.Find("944f7ca6-658e-4034-8f65-952a655d4c1f");
+            await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
+            return RedirectToAction("Index", "Tickets");
+        }
+
+        // Guest Develper
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestDev()
+        {
+            var user = db.Users.Find("847bb5b8-6409-4d11-81df-2d3b0ad3a2d1");
+            await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
+            return RedirectToAction("Index", "Tickets");
+        }
+
+        // Guest Submitter
+        [AllowAnonymous]
+        public async Task<ActionResult> GuestSubmitter()
+        {
+            var user = db.Users.Find("93e07755-ec0f-409c-bda2-124c3706e250");
+            await SignInManager.SignInAsync(user, isPersistent: true, rememberBrowser: false);
+            return RedirectToAction("Index", "Tickets");
+        }
+
 
         //
         // GET: /Account/VerifyCode

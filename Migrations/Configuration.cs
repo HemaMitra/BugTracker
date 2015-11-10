@@ -46,6 +46,24 @@ namespace BugTracker.Migrations
             var userId = userManager.FindByEmail("hemamitra@gmail.com").Id;
             userManager.AddToRole(userId, "Admin");
 
+            // GuestAdmin
+            
+            if (!context.Users.Any(u => u.Email == "guestadmin@coderfoundry.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "guestadmin@coderfoundry.com",
+                    Email = "guestadmin@coderfoundry.com",
+                    FirstName = "Guest",
+                    LastName = "Admin"
+                }, "Guest-1");
+            }
+
+            // Add GuestAdmin to the Roles Table
+            userId = userManager.FindByEmail("guestadmin@coderfoundry.com").Id;
+            userManager.AddToRole(userId, "Admin");
+            
+
             // Role for Project Manager
             if (!context.Roles.Any(r => r.Name == "ProjectManager"))
             {
@@ -82,6 +100,24 @@ namespace BugTracker.Migrations
             // Add ProjectManager to the Roles Table
             userId = userManager.FindByEmail("vickym@gmail.com").Id;
             userManager.AddToRole(userId, "ProjectManager");
+
+            // Guest Project Manager
+            if (!context.Users.Any(u => u.Email == "guestPM@coderfoundry.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "guestPM@coderfoundry.com",
+                    Email = "guestPM@coderfoundry.com",
+                    FirstName = "Guest PM",
+                    LastName = "PM"
+                }, "Guest-1");
+            }
+
+            // Add ProjectManager to the Roles Table
+            userId = userManager.FindByEmail("guestPM@coderfoundry.com").Id;
+            userManager.AddToRole(userId, "ProjectManager");
+
+
 
             // Role For Developer
             if (!context.Roles.Any(r => r.Name == "Developer"))
@@ -137,6 +173,21 @@ namespace BugTracker.Migrations
             userId = userManager.FindByEmail("rano_l@yahoo.com").Id;
             userManager.AddToRole(userId, "Developer");
 
+            // Guest Developer
+            if (!context.Users.Any(u => u.Email == "guestdeveloper@coderfoundry.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "guestdeveloper@coderfoundry.com",
+                    Email = "guestdeveloper@coderfoundry.com",
+                    FirstName = "Guest Dev",
+                    LastName = "D"
+                }, "Guest-1");
+            }
+
+            // Add Developer to the Roles Table
+            userId = userManager.FindByEmail("guestdeveloper@coderfoundry.com").Id;
+            userManager.AddToRole(userId, "Developer");
 
             // Role for Submitter
             if (!context.Roles.Any(r => r.Name == "Submitter"))
@@ -172,6 +223,22 @@ namespace BugTracker.Migrations
             }
             // Add Submitter to the Roles Table
             userId = userManager.FindByEmail("hemaskolte@yahoo.com").Id;
+            userManager.AddToRole(userId, "Submitter");
+
+            // Guest Submitter
+
+            if (!context.Users.Any(u => u.Email == "guestsubmitter@coderfoundry.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "guestsubmitter@coderfoundry.com",
+                    Email = "guestsubmitter@coderfoundry.com",
+                    FirstName = "Guest Submitter",
+                    LastName = "S"
+                }, "Guest-1");
+            }
+            // Add Submitter to the Roles Table
+            userId = userManager.FindByEmail("guestsubmitter@coderfoundry.com").Id;
             userManager.AddToRole(userId, "Submitter");
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
