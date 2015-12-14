@@ -14,6 +14,11 @@
             Project Name
            @* @Html.DisplayNameFor(model => model.ProjectName)*@
         </th>
+        <th>
+            Archieved
+        </th>
+        <th>
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -23,8 +28,11 @@
                 @Html.DisplayFor(modelItem => item.ProjectName)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ProjectArchieved)
+            </td>
+            <td>
                 <a href="" class="edit" data-toggle="modal" data-target="#editproject" data-comid="@item.Id"
-                   data-body="@item.ProjectName" data-archieve="@item.ProjectArchieved">Edit Project</a>
+                   data-body="@item.ProjectName" data-archieve="@item.ProjectArchieved">Edit</a>
             </td>
         </tr>
     }

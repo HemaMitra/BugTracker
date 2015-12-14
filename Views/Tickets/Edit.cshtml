@@ -123,36 +123,7 @@
             </div>
         }
         </div>
-     <div class="col-sm-5">
-                @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")) || (Model.AssignedToUserId == User.Identity.GetUserId()) || (Model.OwnerUserId == User.Identity.GetUserId()))
-                {
-                    <h4 class="col-sm-offset-1">Add Comment</h4>
-                    <div id="comment-form" class="comment-form col-sm-offset-1">
-
-                        <form action="@Url.Action("CreateComments")" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="ticketId" value="@Model.Id" />
-                            <input type="hidden" name="userId" value="@User.Identity.GetUserId()" />
-                            <input type="hidden" name="backUrl" value="Edit">
-                            <span class="font-semi-bold">
-                                Comment : </span><textarea class="form-control" rows="3" placeholder="Message" name="Comments"></textarea><br>
-                            <span class="font-semi-bold">
-                                Upload Image :
-                                </span>
-                                <input name="image" type="file" class="form-control" id="fileUpload" /><br><br>
-                            <span class="font-semi-bold">
-                                Uploaded Image Description : 
-                                </span>
-                                <textarea class="form-control" rows="3" placeholder="File Description" 
-                                          name="FileDesc"></textarea>
-                                <br>
-                                <div class="col-md-offset-5 col-md-10">
-                                    <input type="submit" id ="SRButton" value="Submit" class="btn btn-sm btn-primary" 
-                                           />
-                                </div>
-</form>
-                    </div>
-                }
-            </div>
+     
 </div>
 
 @section scripts

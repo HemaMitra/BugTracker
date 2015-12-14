@@ -22,3 +22,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.line-ht{
+    line-height:50px;
+}
