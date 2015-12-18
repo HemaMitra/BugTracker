@@ -85,7 +85,7 @@
                             <a href="@Url.Action("Index", "Home")">
                                 <span class="menu-content block">
                                     <span class="menu-icon"><i class="block fa fa-home fa-lg"></i></span>
-                                    <span class="text m-left-sm">Dashboard</span>
+                                    <span class="text m-left-sm">Home</span>
                                 </span>
                                 <span class="menu-content-hover block">
                                     Home
@@ -113,9 +113,6 @@
 
                             @if (User.IsInRole("Admin"))
                             {
-                                @*<li><a href="@Url.Action("Index","Projects")">
-                                    <span class="submenu-label text-white">All Projects
-                                    </span></a></li>*@
                                   <li>
                                     <a href="@Url.Action("EditProject","Admin")">
                                     <span class="submenu-label text-white">All Projects</span>

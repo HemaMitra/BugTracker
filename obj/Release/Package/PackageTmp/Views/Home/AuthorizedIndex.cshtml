@@ -31,6 +31,7 @@
                         Assigned Projects
                     </th>
                 }
+                <th>Project Details</th>
             </tr>
 
             @foreach (var item in Model)
@@ -44,7 +45,7 @@
 
                      
                     <td>
-                        <a href="@Url.Action("Details", "Projects", new { id = item.Id })">View Details</a>
+                        <a href="@Url.Action("Details", "Projects", new { id = item.Id })">View</a>
                     </td>
                 </tr>
                 }
